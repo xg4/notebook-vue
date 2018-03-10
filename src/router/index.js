@@ -1,15 +1,33 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import Book from '@/components/Book'
+import New from '@/components/New'
 
 Vue.use(Router)
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
-    }
-  ]
+const router = new Router({
+  routes: [{
+    path: '/',
+    redirect: '/book'
+  }, {
+    path: '/book',
+    name: 'Book',
+    meta: {
+      title: '记事本'
+    },
+    component: Book
+  }, {
+    path: '/new',
+    meta: {
+      title: '新建'
+    },
+    component: New
+  }]
 })
+
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title
+  next();
+})
+
+export default router
