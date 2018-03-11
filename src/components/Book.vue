@@ -7,31 +7,34 @@
     </mt-navbar>
     <mt-tab-container v-model="selected">
         <mt-tab-container-item id="all">
-            <xg-note-card v-for="(note,index) in notes" 
+            <template v-if="reverseNotes.length===0">
+              空
+            </template>
+            <xg-note-card v-else v-for="(note,index) in reverseNotes" 
             :key="index" 
             :title="note.title"
             :content="note.content"
-            :tagType="note.tagType"
+            :tag="note.tag"
             :date="note.date"
             v-model="note.finish">                               
             </xg-note-card>
         </mt-tab-container-item>
         <mt-tab-container-item id="finish">          
-          <xg-note-card v-for="(note,index) in notes.filter(v=>v.finish)" 
+          <xg-note-card v-for="(note,index) in reverseNotes.filter(v=>v.finish)" 
           :key="index" 
           :title="note.title"
           :content="note.content"
-          :tagType="note.tagType"
+          :tag="note.tag"
           :date="note.date"
           v-model="note.finish">                             
           </xg-note-card>      
         </mt-tab-container-item>
         <mt-tab-container-item id="unfinish">
-            <xg-note-card v-for="(note,index) in notes.filter(v=>!v.finish)" 
+            <xg-note-card v-for="(note,index) in reverseNotes.filter(v=>!v.finish)" 
             :key="index" 
             :title="note.title"
             :content="note.content"
-            :tagType="note.tagType"
+            :tag="note.tag"
             :date="note.date"
             v-model="note.finish">                            
             </xg-note-card>
@@ -53,10 +56,17 @@ export default {
       notes: []
     };
   },
+  computed: {
+    reverseNotes() {
+      let notes = this.notes.map(v => v);
+      return notes.reverse();
+    }
+  },
   watch: {
     notes: {
       handler(newValue) {
-        console.log(newValue);
+        let notes = JSON.stringify(this.notes);
+        localStorage.setItem("notes", notes);
       },
       deep: true
     }

@@ -2,8 +2,8 @@
   <transition
   leave-active-class="animated bounceOutLeft">
     <div class="xg-note-card">
-      <div class="xg-note-card-icon" :class="_tagType">
-          <i class="icon icon-tag"></i>
+      <div class="xg-note-card-icon">
+          <i class="icon icon-tag" :class="_tagClass"></i>
       </div>
       <div class="xg-note-card-btn">
         <xg-checkbox v-model="isFinish"></xg-checkbox>
@@ -21,13 +21,14 @@
 
 <script>
 const TYPE_CLASSES_MAP = {
-  success: "xg-note-card-icon-success",
-  info: "xg-note-card-icon-info",
-  warning: "xg-note-card-icon-warning",
-  danger: "xg-note-card-icon-danger"
+  primary: "primary",
+  success: "success",
+  info: "info",
+  warning: "warning",
+  danger: "danger"
 };
 export default {
-  name: "XgNoteCard",
+  name: "xg-note-card",
   mounted() {},
   props: {
     title: {
@@ -42,29 +43,41 @@ export default {
       type: [Date, Number, String],
       default: Date.now
     },
-    tagType: String,
+    tag: String,
     value: Boolean
   },
   data() {
-    return {};
+    return {
+      isFinish: this.value
+    };
   },
   computed: {
-    isFinish: {
-      get() {
-        return this.value;
-      },
-      set(newValue) {
-        this.$emit("input", newValue);
-      }
-    },
-    _tagType() {
-      return TYPE_CLASSES_MAP[this.tagType] || "";
+    _tagClass() {
+      return TYPE_CLASSES_MAP[this.tag] || "primary";
     },
     _formatDate() {
       return 1;
     }
   },
-  watch: {}
+  watch: {
+    value(val) {
+      this.isFinish = val;
+    },
+    isFinish(newValue) {
+      // note 改变后 toast 提醒
+      if (newValue) {
+        this.$toast({
+          message: "已完成"
+        });
+      } else {
+        this.$toast({
+          message: "未完成"
+        });
+      }
+      setTimeout(() => this.$emit("input", newValue), 100);
+      console.log(`${this.title}:${newValue}`);
+    }
+  }
 };
 </script>
 
@@ -99,26 +112,25 @@ export default {
   display: block;
   width: 100%;
   height: 100%;
+}
+
+.icon-tag.primary {
   color: #409eff;
 }
 
-.xg-note-card-icon,
-.xg-note-card-icon-success .icon {
+.icon-tag.success {
   color: #67c23a;
 }
 
-.xg-note-card-icon,
-.xg-note-card-icon-info .icon {
+.icon-tag.info {
   color: #909399;
 }
 
-.xg-note-card-icon,
-.xg-note-card-icon-warning .icon {
+.icon-tag.warning {
   color: #e6a23c;
 }
 
-.xg-note-card-icon,
-.xg-note-card-icon-danger .icon {
+.icon-tag.danger {
   color: #f56c6c;
 }
 
@@ -146,7 +158,7 @@ export default {
 .xg-note-card-date {
   width: 40%;
   text-align: right;
-  font-size: 1vh;
+  font-size: 0.2rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
