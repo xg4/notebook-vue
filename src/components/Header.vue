@@ -1,15 +1,15 @@
 <template>
   <header>
     <div class="xg-header" :class="{ 'is-fixed': fixed }">
-        <div class="xg-header-button is-left">
+      <div class="xg-header-button is-left">
         <router-link to="/">
             <mt-button icon="back">返回</mt-button>
         </router-link>
-        </div>
-        <h1 class="xg-header-title" v-text="title"></h1>
-        <div class="xg-header-button is-right">
-        <mt-button icon="more"></mt-button>
-        </div>
+      </div>
+      <h1 class="xg-header-title" v-text="title"></h1>
+      <div class="xg-header-button is-right">
+      <mt-button icon="more"></mt-button>
+      </div>
     </div>
     <div class="xg-header is-placeholder" v-if="fixed"></div>
   </header>
@@ -18,7 +18,6 @@
 <script>
 export default {
   name: "xg-header",
-
   props: {
     fixed: Boolean,
     title: String

@@ -1,6 +1,6 @@
 <template>
   <div class="xg-empty">
-      <slot>空</slot>
+    <slot>空</slot>
   </div>
 </template>
 

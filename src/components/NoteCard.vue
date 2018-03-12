@@ -1,81 +1,28 @@
 <template>
   <transition
-  enter-active-class="animated bounceInRight"
   leave-active-class="animated bounceOutLeft">
     <div class="xg-note-card">
       <div class="xg-note-card-icon">
-          <i class="icon icon-tag" :class="_tagClass"></i>
+          <i class="icon icon-tag" :class="note.tag"></i>
       </div>
       <div class="xg-note-card-btn">
-        <xg-checkbox v-model="isFinish"></xg-checkbox>
+        <xg-checkbox v-model="note.finish"></xg-checkbox>
       </div>
       <div class="xg-note-card-header">
-        <div class="xg-note-card-title">{{ title }}</div>
-        <div class="xg-note-card-date">{{ date | formatDate(true)}}</div>
+        <div class="xg-note-card-title">{{ note.title }}</div>
+        <div class="xg-note-card-date">{{ note.date | formatDate(true)}}</div>
       </div>
       <div class="xg-note-card-content">
-        {{ content }}
+        {{ note.content }}
       </div>
     </div>
   </transition>
 </template>
 
 <script>
-const TYPE_CLASSES_MAP = {
-  primary: "primary",
-  success: "success",
-  info: "info",
-  warning: "warning",
-  danger: "danger"
-};
 export default {
   name: "xg-note-card",
-  mounted() {},
-  props: {
-    title: {
-      type: String,
-      default: "标题"
-    },
-    content: {
-      type: String,
-      default: "内容"
-    },
-    date: {
-      type: [Date, Number, String],
-      default: Date.now
-    },
-    tag: String,
-    value: Boolean
-  },
-  data() {
-    return {
-      isFinish: this.value
-    };
-  },
-  computed: {
-    _tagClass() {
-      return TYPE_CLASSES_MAP[this.tag] || "primary";
-    }
-  },
-  watch: {
-    value(val) {
-      this.isFinish = val;
-    },
-    isFinish(newValue) {
-      // note 改变后 toast 提醒
-      if (newValue) {
-        this.$toast({
-          message: "已完成"
-        });
-      } else {
-        this.$toast({
-          message: "未完成"
-        });
-      }
-      setTimeout(() => this.$emit("input", newValue), 100);
-      console.log(`${this.title}:${newValue}`);
-    }
-  }
+  props: ["note"]
 };
 </script>
 
@@ -112,7 +59,7 @@ export default {
   height: 100%;
 }
 
-.icon-tag.primary {
+.icon-tag {
   color: #409eff;
 }
 

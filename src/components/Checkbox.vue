@@ -1,10 +1,11 @@
 <template>
   <label class="xg-checkbox-label">
-      <span class="xg-checkbox">
-          <input type="checkbox" class="xg-checkbox-input"
-          v-model="currentValue">
-          <span class="xg-checkbox-core"></span>
-      </span>
+    <span class="xg-checkbox">
+      <input type="checkbox" 
+      class="xg-checkbox-input"
+      v-model="currentValue">
+      <span class="xg-checkbox-core"></span>
+    </span>
   </label>
 </template>
 
@@ -30,8 +31,6 @@ export default {
 
 <style scoped>
 .xg-checkbox-core:not(:checked) {
-  /* background-color: #d9d9d9; */
-  /* border-color: #d9d9d9; */
   border-color: #888;
 }
 .xg-checkbox-label {
@@ -42,7 +41,6 @@ export default {
   display: none;
 }
 .xg-checkbox-input:checked + .xg-checkbox-core {
-  /* background-color: #26a2ff; */
   border-color: #26a2ff;
 }
 .xg-checkbox-input:checked + .xg-checkbox-core::after {
@@ -56,7 +54,6 @@ export default {
 }
 .xg-checkbox-core {
   display: inline-block;
-  /* background-color: #fff; */
   border-radius: 100%;
   border: 2px solid #ccc;
   position: relative;

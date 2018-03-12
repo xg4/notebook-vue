@@ -19,18 +19,20 @@ Vue.filter('formatDate', function (date, friendly) {
 import MintUI from 'mint-ui';
 import ElementUI from 'element-ui';
 import XgNoteCard from '@/components/NoteCard';
-import XgTab from '@/components/Tab'
+import XgNavbar from '@/components/Navbar'
 import XgHeader from '@/components/Header'
 import XgCheckbox from "@/components/Checkbox"
 import XgEmpty from "@/components/Empty"
+import XgTab from "@/components/Tab"
 
 Vue.use(MintUI)
 Vue.use(ElementUI)
-Vue.component(XgTab.name, XgTab)
+Vue.component(XgNavbar.name, XgNavbar)
 Vue.component(XgHeader.name, XgHeader)
 Vue.component(XgCheckbox.name, XgCheckbox)
 Vue.component(XgNoteCard.name, XgNoteCard)
 Vue.component(XgEmpty.name, XgEmpty)
+Vue.component(XgTab.name, XgTab)
 
 Vue.config.productionTip = false
 
