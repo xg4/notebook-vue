@@ -55,6 +55,7 @@ export default {
   data() {
     return {
       form: {
+        id: "",
         title: "",
         content: "",
         tag: "",
@@ -77,7 +78,23 @@ export default {
       }
     };
   },
+  mounted() {
+    this.getNoteId();
+  },
   methods: {
+    getNoteId() {
+      // id:1-9999
+      let notes = localStorage.getItem("notes") || "[]";
+      let id = Math.floor(Math.random() * 9998 + 1);
+      notes = JSON.parse(notes);
+      while (this.isExistId(id, notes)) {
+        id = Math.floor(Math.random() * 9998 + 1);
+      }
+      this.form.id = id;
+    },
+    isExistId(id, notes) {
+      notes.some(n => n.id == id);
+    },
     resetForm(formName) {
       // 重置表单
       this.form.finish = false;

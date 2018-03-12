@@ -45,7 +45,7 @@
 
 <script>
 export default {
-  name: "Book",
+  name: "Notes",
   mounted() {
     let notes = localStorage.getItem("notes") || "[]";
     this.notes = JSON.parse(notes);
