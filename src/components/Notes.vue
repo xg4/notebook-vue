@@ -7,9 +7,7 @@
     </mt-navbar>
     <mt-tab-container v-model="selected">
         <mt-tab-container-item id="all">
-            <template v-if="reverseNotes.length===0">
-              空
-            </template>
+            <xg-empty v-if="reverseNotes.length===0"></xg-empty>
             <xg-note-card v-else v-for="(note,index) in reverseNotes" 
             :key="index" 
             :title="note.title"
@@ -19,8 +17,9 @@
             v-model="note.finish">                               
             </xg-note-card>
         </mt-tab-container-item>
-        <mt-tab-container-item id="finish">          
-          <xg-note-card v-for="(note,index) in reverseNotes.filter(v=>v.finish)" 
+        <mt-tab-container-item id="finish">
+          <xg-empty v-if="reverseNotes.filter(v=>v.finish).length===0"></xg-empty>          
+          <xg-note-card v-else v-for="(note,index) in reverseNotes.filter(v=>v.finish)" 
           :key="index" 
           :title="note.title"
           :content="note.content"
@@ -30,7 +29,8 @@
           </xg-note-card>      
         </mt-tab-container-item>
         <mt-tab-container-item id="unfinish">
-            <xg-note-card v-for="(note,index) in reverseNotes.filter(v=>!v.finish)" 
+            <xg-empty v-if="reverseNotes.filter(v=>!v.finish).length===0"></xg-empty>
+            <xg-note-card v-else v-for="(note,index) in reverseNotes.filter(v=>!v.finish)" 
             :key="index" 
             :title="note.title"
             :content="note.content"

@@ -1,5 +1,6 @@
 <template>
   <transition
+  enter-active-class="animated bounceInRight"
   leave-active-class="animated bounceOutLeft">
     <div class="xg-note-card">
       <div class="xg-note-card-icon">
@@ -54,9 +55,6 @@ export default {
   computed: {
     _tagClass() {
       return TYPE_CLASSES_MAP[this.tag] || "primary";
-    },
-    _formatDate() {
-      return 1;
     }
   },
   watch: {

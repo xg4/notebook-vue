@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <xg-header fixed="fixed" title="记事本">
-    </xg-header>
+    <xg-header fixed="fixed" title="记事本"></xg-header>
     <router-view/>    
     <xg-tab fixed="fixed"></xg-tab>
   </div>
@@ -9,13 +8,7 @@
 
 <script>
 export default {
-  name: "App",
-  data() {
-    return {
-      on: true
-    };
-  },
-  computed: {}
+  name: "App"
 };
 </script>
 

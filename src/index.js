@@ -22,14 +22,15 @@ import XgNoteCard from '@/components/NoteCard';
 import XgTab from '@/components/Tab'
 import XgHeader from '@/components/Header'
 import XgCheckbox from "@/components/Checkbox"
+import XgEmpty from "@/components/Empty"
 
 Vue.use(MintUI)
 Vue.use(ElementUI)
-
 Vue.component(XgTab.name, XgTab)
 Vue.component(XgHeader.name, XgHeader)
 Vue.component(XgCheckbox.name, XgCheckbox)
 Vue.component(XgNoteCard.name, XgNoteCard)
+Vue.component(XgEmpty.name, XgEmpty)
 
 Vue.config.productionTip = false
 

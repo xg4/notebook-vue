@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Book from '@/components/Book'
+import Notes from '@/components/Notes'
 import New from '@/components/New'
 
 Vue.use(Router)
@@ -8,14 +8,14 @@ Vue.use(Router)
 const router = new Router({
   routes: [{
     path: '/',
-    redirect: '/book'
+    redirect: '/notes'
   }, {
-    path: '/book',
-    name: 'Book',
+    path: '/notes',
+    name: 'Notes',
     meta: {
       title: '记事本'
     },
-    component: Book
+    component: Notes
   }, {
     path: '/new',
     meta: {

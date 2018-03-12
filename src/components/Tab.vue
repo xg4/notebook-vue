@@ -1,7 +1,7 @@
 <template>
   <footer>
     <div class="xg-tab" :class="{'is-fixed':fixed}">
-        <router-link class="xg-tab-item" to="/book">
+        <router-link class="xg-tab-item" to="/notes">
           <div class="xg-tab-item-icon">
             <i class="icon icon-book"></i>
           </div>
