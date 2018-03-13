@@ -9,12 +9,9 @@
       </el-form-item>
       <el-form-item label="时间" prop="date">
         <el-col :span="18">
-          <el-date-picker type="datetime" 
-          placeholder="选择日期" 
-          v-model="form.date" 
-          style="width: 100%;">
+          <el-date-picker type="datetime" placeholder="选择日期" v-model="form.date" style="width: 100%;">
           </el-date-picker>
-        </el-col>      
+        </el-col>
       </el-form-item>
       <el-form-item label="标签" prop="tag">
         <el-select v-model="form.tag" placeholder="请选择标签类型">
@@ -49,11 +46,11 @@
             </span>
           </el-option>
         </el-select>
-      </el-form-item>        
-        <el-form-item label="是否收藏" label-width="80px"> 
+      </el-form-item>
+      <el-form-item label="是否收藏" label-width="80px">
         <el-switch v-model="form.collect"></el-switch>
       </el-form-item>
-      <el-form-item label="是否完成" label-width="80px"> 
+      <el-form-item label="是否完成" label-width="80px">
         <el-switch v-model="form.finish"></el-switch>
       </el-form-item>
       <el-form-item label-width="0" class="form-btn-group">
@@ -116,24 +113,31 @@ export default {
       this.$refs[formName].resetFields();
     },
     submitForm(formName) {
-      // 验证表单
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          // 成功
-          let notes = localStorage.getItem("notes") || "[]";
-          notes = JSON.parse(notes);
-          notes.push(this.form);
-          notes = JSON.stringify(notes);
-          localStorage.setItem("notes", notes);
-          this.$messagebox.alert("添加成功！").then(action => {
-            this.$router.push("/");
-          });
-        } else {
-          // 失败
-          console.log("error submit!!");
-          return false;
-        }
+      // Indicator
+      this.$indicator.open({
+        spinnerType: "fading-circle"
       });
+      setTimeout(() => {
+        this.$indicator.close();
+        // 验证表单
+        this.$refs[formName].validate(valid => {
+          if (valid) {
+            // 成功
+            let notes = localStorage.getItem("notes") || "[]";
+            notes = JSON.parse(notes);
+            notes.push(this.form);
+            notes = JSON.stringify(notes);
+            localStorage.setItem("notes", notes);
+            this.$messagebox.alert("添加成功！").then(action => {
+              this.$router.push("/");
+            });
+          } else {
+            // 失败
+            this.$toast({ message: "新建失败！" });
+            return false;
+          }
+        });
+      }, 1000);
     }
   }
 };

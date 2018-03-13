@@ -1,6 +1,14 @@
-import Vue from 'vue';
-import App from './App';
-import router from './router';
+import Vue from 'vue'
+import App from './App'
+import router from './router'
+import MintUI from 'mint-ui'
+import ElementUI from 'element-ui'
+import XgNoteCard from '@/components/NoteCard'
+import XgNavbar from '@/components/Navbar'
+import XgHeader from '@/components/Header'
+import XgCheckbox from "@/components/Checkbox"
+import XgEmpty from "@/components/Empty"
+import XgTab from "@/components/Tab"
 
 /**
  * date filter
@@ -14,16 +22,7 @@ Vue.filter('formatDate', function (date, friendly) {
   } else {
     return date.format('YYYY-MM-DD HH:mm');
   }
-});
-
-import MintUI from 'mint-ui';
-import ElementUI from 'element-ui';
-import XgNoteCard from '@/components/NoteCard';
-import XgNavbar from '@/components/Navbar'
-import XgHeader from '@/components/Header'
-import XgCheckbox from "@/components/Checkbox"
-import XgEmpty from "@/components/Empty"
-import XgTab from "@/components/Tab"
+})
 
 Vue.use(MintUI)
 Vue.use(ElementUI)

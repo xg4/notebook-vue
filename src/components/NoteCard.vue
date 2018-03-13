@@ -1,9 +1,8 @@
 <template>
-  <transition
-  leave-active-class="animated bounceOutLeft">
+  <transition name="NoteCard" leave-active-class="animated bounceOutLeft">
     <div class="xg-note-card">
       <div class="xg-note-card-icon">
-          <i class="icon icon-tag" :class="note.tag"></i>
+        <i class="icon icon-tag" :class="note.tag"></i>
       </div>
       <div class="xg-note-card-btn">
         <xg-checkbox v-model="note.finish"></xg-checkbox>
@@ -12,8 +11,18 @@
         <div class="xg-note-card-title">{{ note.title }}</div>
         <div class="xg-note-card-date">{{ note.date | formatDate(true)}}</div>
       </div>
-      <div class="xg-note-card-content">
-        {{ note.content }}
+      <div class="xg-note-card-body">
+        <div class="xg-note-card-content">
+          {{ note.content }}
+        </div>
+        <div class="xg-note-card-collection">
+          <div class="collection-btn" @click="handleCollect">
+            <transition name="collect" enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
+              <i class="icon icon-collection" v-if="!note.collect"></i>
+              <i class="icon icon-collection_fill" v-else></i>
+            </transition>
+          </div>
+        </div>
       </div>
     </div>
   </transition>
@@ -22,7 +31,27 @@
 <script>
 export default {
   name: "xg-note-card",
-  props: ["note"]
+  props: ["note"],
+  watch: {
+    note: {
+      handler(newNotes) {},
+      deep: true
+    }
+  },
+  methods: {
+    handleCollect() {
+      this.note.collect = !this.note.collect;
+      if (this.note.collect) {
+        this.$toast({
+          message: "收藏成功"
+        });
+      } else {
+        this.$toast({
+          message: "取消收藏"
+        });
+      }
+    }
+  }
 };
 </script>
 
@@ -109,13 +138,35 @@ export default {
   white-space: nowrap;
 }
 
-.xg-note-card-content {
+.xg-note-card-body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: space-between;
   margin-left: 32px;
   padding: 10px 5px;
   height: 22px;
+}
+.xg-note-card-content {
+  width: 80%;
   color: rgb(171, 171, 171);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.xg-note-card-collection {
+  width: 20%;
+  text-align: center;
+}
+.collection-btn {
+  margin: 0 auto;
+  width: 50%;
+}
+.xg-note-card-collection .icon-collection {
+  color: rgb(198, 209, 222);
+  /* color: #000; */
+}
+.xg-note-card-collection .icon-collection_fill {
+  color: rgb(247, 186, 42);
 }
 </style>

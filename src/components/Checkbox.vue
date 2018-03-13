@@ -1,9 +1,7 @@
 <template>
   <label class="xg-checkbox-label">
     <span class="xg-checkbox">
-      <input type="checkbox" 
-      class="xg-checkbox-input"
-      v-model="currentValue">
+      <input type="checkbox" class="xg-checkbox-input" v-model="currentValue">
       <span class="xg-checkbox-core"></span>
     </span>
   </label>

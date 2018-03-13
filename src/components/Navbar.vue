@@ -9,7 +9,7 @@
           记事本
         </div>
       </router-link>
-      <router-link class="xg-navbar-item" to="/new">
+      <router-link class="xg-navbar-item" to="/creat/note">
         <div class="xg-navbar-item-icon">
           <i class="icon icon-new"></i>
         </div>
@@ -32,9 +32,9 @@
         <div class="xg-navbar-item-label">
           我
         </div>
-      </router-link>    
-      <div class="xg-navbar is-placeholder" v-if="fixed"></div>
+      </router-link>
     </nav>
+    <div class="xg-navbar is-placeholder" v-if="fixed"></div>
   </footer>
 </template>
 

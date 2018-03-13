@@ -3,7 +3,7 @@
     <xg-header fixed="fixed" :title="title"></xg-header>
     <section>
       <router-view></router-view>
-    </section>  
+    </section>
     <xg-navbar fixed="fixed"></xg-navbar>
   </div>
 </template>
