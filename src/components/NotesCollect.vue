@@ -7,6 +7,10 @@
 </template>
 
 <script>
+import { local } from "@/utils";
+import XgNoteCard from "@/components/NoteCard";
+import XgEmpty from "@/components/Empty";
+
 export default {
   name: "Collect",
   mounted() {
@@ -24,12 +28,10 @@ export default {
   },
   methods: {
     getData() {
-      let notes = localStorage.getItem("notes") || "[]";
-      this.notes = JSON.parse(notes);
+      this.notes = local.get("notes");
     },
     saveData(newNotes) {
-      let notes = JSON.stringify(newNotes);
-      localStorage.setItem("notes", notes);
+      local.set("notes", newNotes);
     }
   },
   watch: {
@@ -39,6 +41,10 @@ export default {
       },
       deep: true
     }
+  },
+  components: {
+    XgNoteCard,
+    XgEmpty
   }
 };
 </script>

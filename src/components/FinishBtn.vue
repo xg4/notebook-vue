@@ -1,5 +1,5 @@
 <template>
-  <label class="xg-checkbox-label">
+  <label class="xg-checkbox-label" @click.stop>
     <span class="xg-checkbox">
       <input type="checkbox" class="xg-checkbox-input" v-model="currentValue">
       <span class="xg-checkbox-core"></span>
@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: "xg-checkbox",
+  name: "xg-finish-btn",
   props: ["value"],
   data() {
     return {
@@ -18,10 +18,21 @@ export default {
   },
   watch: {
     value(val) {
+      // 通知父组件finish改变
       this.currentValue = val;
     },
     currentValue(val) {
       this.$emit("input", val);
+      // toast 提示
+      if (val) {
+        this.$toast({
+          message: "标记完成"
+        });
+      } else {
+        this.$toast({
+          message: "标记未完成"
+        });
+      }
     }
   }
 };

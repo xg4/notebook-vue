@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-const Notes = () => import(/* webpackChunkName: "notes" */ '@/components/Notes')
-const NotesAll = () => import(/* webpackChunkName: "notes" */ '@/components/NotesAll')
+const Notes = () => import('@/components/Notes')
+const NotesAll = () => import('@/components/NotesAll')
 const NotesFinish = () => import('@/components/NotesFinish')
 const NotesUnfinish = () => import('@/components/NotesUnfinish')
 const CreateNote = () => import('@/components/Create')
-const Collect = () => import('@/components/Collect')
+const NotesCollect = () => import('@/components/NotesCollect')
+const Note = () => import('@/components/Note')
 
 Vue.use(Router)
 
@@ -55,12 +56,19 @@ const router = new Router({
     },
     component: CreateNote
   }, {
-    path: '/collect',
-    name: 'Collect',
+    path: '/collection',
+    name: 'NotesCollect',
     meta: {
       title: '收藏'
     },
-    component: Collect
+    component: NotesCollect
+  }, {
+    path: '/note/:id',
+    name: 'Note',
+    meta: {
+      title: '详情'
+    },
+    component: Note
   }]
 })
 

@@ -1,11 +1,16 @@
 <template>
-  <div class="notes">
+  <div>
     <xg-tab></xg-tab>
-    <router-view :notes="notes"></router-view>
+    <transition mode="out-in" :duration="200" enter-active-class="animated lightSpeedIn" leave-active-class="animated lightSpeedOut">
+      <router-view :notes="notes"></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
+import { local } from "@/utils";
+import XgTab from "@/components/Tab";
+
 export default {
   name: "Notes",
   mounted() {
@@ -18,12 +23,10 @@ export default {
   },
   methods: {
     getData() {
-      let notes = localStorage.getItem("notes") || "[]";
-      this.notes = JSON.parse(notes);
+      this.notes = local.get("notes");
     },
     saveData(newNotes) {
-      let notes = JSON.stringify(newNotes);
-      localStorage.setItem("notes", notes);
+      local.set("notes", newNotes);
     }
   },
   watch: {
@@ -33,6 +36,9 @@ export default {
       },
       deep: true
     }
+  },
+  components: {
+    XgTab
   }
 };
 </script>

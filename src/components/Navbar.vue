@@ -17,7 +17,7 @@
           新建
         </div>
       </router-link>
-      <router-link class="xg-navbar-item" to="/collect">
+      <router-link class="xg-navbar-item" to="/collection">
         <div class="xg-navbar-item-icon">
           <i class="icon icon-collect"></i>
         </div>

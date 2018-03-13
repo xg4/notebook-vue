@@ -54,17 +54,22 @@
         <el-switch v-model="form.finish"></el-switch>
       </el-form-item>
       <el-form-item label-width="0" class="form-btn-group">
-        <el-button type="primary" @click="submitForm('noteForm')">提交</el-button>
-        <el-button @click="resetForm('noteForm')">重置</el-button>
+        <el-button :loading="loading" type="primary" @click="submitForm('noteForm')">提交</el-button>
+        <el-button :loading="reset" @click="resetForm('noteForm')">重置</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
+import { getID, local } from "@/utils";
+
 export default {
   data() {
     return {
+      notes: [],
+      loading: false,
+      reset: false,
       form: {
         id: "",
         title: "",
@@ -90,29 +95,43 @@ export default {
     };
   },
   mounted() {
+    this.getData();
+    // 初始化id date tag
     this.getNoteId();
+    this.form.date = new Date();
+    this.form.tag = "primary";
   },
   methods: {
+    saveData(newNotes) {
+      local.set("notes", newNotes);
+    },
+    getData() {
+      this.notes = local.get("notes");
+    },
     getNoteId() {
-      // id:1-9999
-      let notes = localStorage.getItem("notes") || "[]";
-      let id = Math.floor(Math.random() * 9998 + 1);
-      notes = JSON.parse(notes);
-      while (this.isExistId(id, notes)) {
-        id = Math.floor(Math.random() * 9998 + 1);
+      let id = getID();
+      while (this.findNoteById(id)) {
+        id = getID();
       }
       this.form.id = id;
     },
-    isExistId(id, notes) {
-      notes.some(n => n.id == id);
+    findNoteById(id) {
+      this.notes.some(n => n.id == id);
     },
     resetForm(formName) {
       // 重置表单
-      this.form.finish = false;
-      this.form.collect = false;
-      this.$refs[formName].resetFields();
+      this.reset = true;
+      setTimeout(() => {
+        this.$refs[formName].resetFields();
+        this.form.finish = false;
+        this.form.collect = false;
+        this.form.date = new Date();
+        this.form.tag = "primary";
+        this.reset = false;
+      }, 100);
     },
     submitForm(formName) {
+      this.loading = true;
       // Indicator
       this.$indicator.open({
         spinnerType: "fading-circle"
@@ -123,20 +142,19 @@ export default {
         this.$refs[formName].validate(valid => {
           if (valid) {
             // 成功
-            let notes = localStorage.getItem("notes") || "[]";
-            notes = JSON.parse(notes);
-            notes.push(this.form);
-            notes = JSON.stringify(notes);
-            localStorage.setItem("notes", notes);
-            this.$messagebox.alert("添加成功！").then(action => {
+            this.notes.push(this.form);
+            this.saveData(this.notes);
+            this.$messagebox.alert("新建成功").then(action => {
               this.$router.push("/");
             });
           } else {
             // 失败
-            this.$toast({ message: "新建失败！" });
+            this.$toast({ message: "新建失败" });
             return false;
           }
         });
+        // btn loading flag
+        this.loading = false;
       }, 1000);
     }
   }

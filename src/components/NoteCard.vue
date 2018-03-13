@@ -1,11 +1,11 @@
 <template>
-  <transition name="NoteCard" leave-active-class="animated bounceOutLeft">
-    <div class="xg-note-card">
+  <transition leave-active-class="animated bounceOutLeft">
+    <div class="xg-note-card" @click="handleTo">
       <div class="xg-note-card-icon">
         <i class="icon icon-tag" :class="note.tag"></i>
       </div>
-      <div class="xg-note-card-btn">
-        <xg-checkbox v-model="note.finish"></xg-checkbox>
+      <div class="xg-note-card-finish">
+        <xg-finish-btn v-model="note.finish"></xg-finish-btn>
       </div>
       <div class="xg-note-card-header">
         <div class="xg-note-card-title">{{ note.title }}</div>
@@ -15,13 +15,8 @@
         <div class="xg-note-card-content">
           {{ note.content }}
         </div>
-        <div class="xg-note-card-collection">
-          <div class="collection-btn" @click="handleCollect">
-            <transition name="collect" enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
-              <i class="icon icon-collection" v-if="!note.collect"></i>
-              <i class="icon icon-collection_fill" v-else></i>
-            </transition>
-          </div>
+        <div class="xg-note-card-collect">
+          <xg-collect-btn v-model="note.collect"></xg-collect-btn>
         </div>
       </div>
     </div>
@@ -29,28 +24,26 @@
 </template>
 
 <script>
+import XgFinishBtn from "@/components/FinishBtn";
+import XgCollectBtn from "@/components/CollectBtn";
+import { formatDate } from "@/utils";
+
 export default {
   name: "xg-note-card",
   props: ["note"],
-  watch: {
-    note: {
-      handler(newNotes) {},
-      deep: true
+  methods: {
+    handleTo() {
+      let id = this.note.id || "";
+      this.$router.push({ path: `/note/${id}` });
     }
   },
-  methods: {
-    handleCollect() {
-      this.note.collect = !this.note.collect;
-      if (this.note.collect) {
-        this.$toast({
-          message: "收藏成功"
-        });
-      } else {
-        this.$toast({
-          message: "取消收藏"
-        });
-      }
-    }
+  components: {
+    XgFinishBtn,
+    XgCollectBtn
+  },
+  filters: {
+    // date filter
+    formatDate
   }
 };
 </script>
@@ -69,7 +62,7 @@ export default {
   color: #303133;
   position: relative;
 }
-.xg-note-card-btn {
+.xg-note-card-finish {
   position: absolute;
   top: 32px;
 }
@@ -154,19 +147,7 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.xg-note-card-collection {
+.xg-note-card-collect {
   width: 20%;
-  text-align: center;
-}
-.collection-btn {
-  margin: 0 auto;
-  width: 50%;
-}
-.xg-note-card-collection .icon-collection {
-  color: rgb(198, 209, 222);
-  /* color: #000; */
-}
-.xg-note-card-collection .icon-collection_fill {
-  color: rgb(247, 186, 42);
 }
 </style>

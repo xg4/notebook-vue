@@ -9,6 +9,9 @@
 </template>
 
 <script>
+import XgHeader from "@/components/Header";
+import XgNavbar from "@/components/Navbar";
+
 export default {
   name: "App",
   mounted() {
@@ -23,6 +26,10 @@ export default {
     $route(to) {
       this.title = to.meta.title;
     }
+  },
+  components: {
+    XgHeader,
+    XgNavbar
   }
 };
 </script>

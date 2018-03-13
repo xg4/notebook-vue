@@ -7,6 +7,9 @@
 </template>
 
 <script>
+import XgNoteCard from "@/components/NoteCard";
+import XgEmpty from "@/components/Empty";
+
 export default {
   name: "NotesFinish",
   props: ["notes"],
@@ -14,6 +17,10 @@ export default {
     notesFinish() {
       return this.notes.filter(n => n.finish);
     }
+  },
+  components: {
+    XgNoteCard,
+    XgEmpty
   }
 };
 </script>
