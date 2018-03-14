@@ -1,10 +1,12 @@
+const uuidv1 = require('uuid/v1');
+const moment = require('moment');
+moment.locale('zh-cn');
+
 /**
  * @description format data
  * @param {Date}
  * @param {Boolean} 是否友好展示
  */
-const moment = require('moment');
-moment.locale('zh-cn');
 const formatDate = (date = Date.now(), friendly = false) => {
     date = moment(date);
     if (friendly) {
@@ -19,7 +21,7 @@ const formatDate = (date = Date.now(), friendly = false) => {
  */
 const downloadJSONFile = () => {
     if (Blob) {
-        let notes = JSON.stringify(localStorage.getItem('notes'));
+        let notes = localStorage.getItem('notes');
         let blob = new Blob([notes], { type: "application/json" });
         let url = URL.createObjectURL(blob);
         let a = document.createElement('a');
@@ -39,11 +41,44 @@ const downloadJSONFile = () => {
 }
 
 /**
- * @description 随机创建笔记的ID(1-9999)
- * @returns {Number}
+ * @description 导入notes 将json文件导入localStorage
+ * @param {DOM} input file DOM对象
+ */
+const renderFile = (fileDOM) => {
+    return new Promise((resolve, reject) => {
+        let file;
+        file = fileDOM.files[0];
+        console.log(file);
+        // 文件为空
+        if (!file) {
+            reject('文件为空，请选择.json文件！')
+        }
+        // 文件是否为JSON
+        let reg = /\.json$/i;
+        if (!reg.test(file.name)) {
+            reject('只能读取.json文件，请选择.json文件导入信息！')
+        }
+
+        const reader = new FileReader(); // new FileReader
+        reader.readAsText(file, "UTF-8"); // 读取文件
+        // 读取完毕
+        reader.onload = function (evt) {
+            let notes = evt.target.result; // 读取文件内容
+            notes = JSON.parse(notes);
+            resolve(notes);
+        };
+        // 读取错误
+        reader.onerror = function () {
+            reject('读取文件出现错误，请重试！');
+        }
+    })
+}
+
+/**
+ * @description 使用uuid根据timestamp生成id
  */
 const getID = () => {
-    return Math.floor(Math.random() * 9998 + 1);
+    return uuidv1();
 }
 
 /**
@@ -59,4 +94,4 @@ const local = {
     }
 }
 
-export { formatDate, downloadJSONFile, getID, local }
+export { formatDate, downloadJSONFile, getID, local, renderFile }

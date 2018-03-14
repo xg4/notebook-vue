@@ -1,6 +1,6 @@
 <template>
   <div v-if="note">
-    记事详情 {{this.note}}
+    <h2>{{this.note.title}}</h2>
   </div>
   <div v-else>
     没有此记录,ID是否有误！
@@ -29,10 +29,11 @@ export default {
       this.notes.some((n, i) => {
         if (n.id == id) {
           index = i;
+          return true;
         }
-        return n.id == id;
+        return false;
       });
-      note = index ? this.notes[index] : null;
+      this.note = index >= 0 ? this.notes[index] : null;
     },
     getData() {
       this.notes = local.get("notes");
@@ -45,5 +46,13 @@ export default {
 </script>
 
 <style scoped>
-
+h2 {
+  margin: 45px 0 0.8em;
+  padding-bottom: 0.7em;
+  border-bottom: 1px solid #ddd;
+  pointer-events: none;
+  text-align: center;
+  font-weight: 600;
+  color: #2c3e50;
+}
 </style>
