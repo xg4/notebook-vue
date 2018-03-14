@@ -7,12 +7,6 @@
       <el-form-item label="内容" prop="content">
         <el-input type="textarea" v-model="form.content"></el-input>
       </el-form-item>
-      <el-form-item label="时间" prop="date">
-        <el-col :span="18">
-          <el-date-picker type="datetime" placeholder="选择日期" v-model="form.date" style="width: 100%;">
-          </el-date-picker>
-        </el-col>
-      </el-form-item>
       <el-form-item label="标签" prop="tag">
         <el-select v-model="form.tag" placeholder="请选择标签类型">
           <el-option label="蓝色" value="primary">
@@ -75,22 +69,15 @@ export default {
         title: "",
         content: "",
         tag: "",
-        date: "",
         finish: false,
-        collect: false
+        collect: false,
+        create_at: "",
+        update_at: ""
       },
       rules: {
         title: [{ required: true, message: "请输入标题", trigger: "blur" }],
         content: [{ required: true, message: "请输入内容", trigger: "blur" }],
-        tag: [{ required: true, message: "请选择标签类型", trigger: "change" }],
-        date: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择日期",
-            trigger: "change"
-          }
-        ]
+        tag: [{ required: true, message: "请选择标签类型", trigger: "change" }]
       }
     };
   },
@@ -98,7 +85,6 @@ export default {
     this.getData();
     // 初始化id date tag
     this.getNoteId();
-    this.form.date = new Date();
     this.form.tag = "primary";
   },
   methods: {
@@ -125,8 +111,8 @@ export default {
         this.$refs[formName].resetFields();
         this.form.finish = false;
         this.form.collect = false;
-        this.form.date = new Date();
         this.form.tag = "primary";
+        // reset flag
         this.reset = false;
       }, 100);
     },
@@ -142,6 +128,7 @@ export default {
         this.$refs[formName].validate(valid => {
           if (valid) {
             // 成功
+            this.form.create_at = new Date();
             this.notes.push(this.form);
             this.saveData(this.notes);
             this.$messagebox.alert("新建成功").then(action => {

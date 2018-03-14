@@ -2,14 +2,14 @@
   <transition leave-active-class="animated bounceOutLeft">
     <div class="xg-note-card" @click="handleTo">
       <div class="xg-note-card-icon">
-        <i class="icon icon-tag" :class="note.tag"></i>
+        <xg-tag-icon :type="note.tag"></xg-tag-icon>
       </div>
       <div class="xg-note-card-finish">
         <xg-finish-btn v-model="note.finish"></xg-finish-btn>
       </div>
       <div class="xg-note-card-header">
         <div class="xg-note-card-title">{{ note.title }}</div>
-        <div class="xg-note-card-date">{{ note.date | formatDate(true)}}</div>
+        <div class="xg-note-card-date">{{ note.create_at | formatDate(true)}}</div>
       </div>
       <div class="xg-note-card-body">
         <div class="xg-note-card-content">
@@ -26,6 +26,7 @@
 <script>
 import XgFinishBtn from "@/components/FinishBtn";
 import XgCollectBtn from "@/components/CollectBtn";
+import XgTagIcon from "@/components/TagIcon";
 import { formatDate } from "@/utils";
 
 export default {
@@ -39,7 +40,8 @@ export default {
   },
   components: {
     XgFinishBtn,
-    XgCollectBtn
+    XgCollectBtn,
+    XgTagIcon
   },
   filters: {
     // date filter
@@ -62,10 +64,12 @@ export default {
   color: #303133;
   position: relative;
 }
+
 .xg-note-card-finish {
   position: absolute;
   top: 32px;
 }
+
 .xg-note-card-icon {
   position: absolute;
   top: 0;
@@ -79,26 +83,6 @@ export default {
   display: block;
   width: 100%;
   height: 100%;
-}
-
-.icon-tag {
-  color: #409eff;
-}
-
-.icon-tag.success {
-  color: #67c23a;
-}
-
-.icon-tag.info {
-  color: #909399;
-}
-
-.icon-tag.warning {
-  color: #e6a23c;
-}
-
-.icon-tag.danger {
-  color: #f56c6c;
 }
 
 .xg-note-card-header {
@@ -115,7 +99,7 @@ export default {
 }
 
 .xg-note-card-title {
-  width: 60%;
+  width: 80%;
   height: 22px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -123,8 +107,8 @@ export default {
 }
 
 .xg-note-card-date {
-  width: 40%;
-  text-align: right;
+  width: 20%;
+  text-align: center;
   font-size: 0.2rem;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -140,6 +124,7 @@ export default {
   padding: 10px 5px;
   height: 22px;
 }
+
 .xg-note-card-content {
   width: 80%;
   color: rgb(171, 171, 171);
@@ -147,7 +132,9 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
 .xg-note-card-collect {
   width: 20%;
+  text-align: center;
 }
 </style>

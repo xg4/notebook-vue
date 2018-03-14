@@ -3,7 +3,7 @@
     <nav class="xg-navbar" :class="{'is-fixed':fixed}">
       <router-link class="xg-navbar-item" to="/notes">
         <div class="xg-navbar-item-icon">
-          <i class="icon icon-book"></i>
+          <i class="icon icon-notebook"></i>
         </div>
         <div class="xg-navbar-item-label">
           记事本
@@ -11,7 +11,7 @@
       </router-link>
       <router-link class="xg-navbar-item" to="/creat/note">
         <div class="xg-navbar-item-icon">
-          <i class="icon icon-new"></i>
+          <i class="icon icon-create"></i>
         </div>
         <div class="xg-navbar-item-label">
           新建

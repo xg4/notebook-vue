@@ -30,23 +30,24 @@ export default {
 
 <style scoped>
 .xg-header {
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background-color: #26a2ff;
-  box-sizing: border-box;
-  color: #fff;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  font-size: 14px;
-  height: 40px;
-  line-height: 1;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   padding: 0 10px;
-  position: relative;
+  height: 40px;
+  background-color: #26a2ff;
+  box-sizing: border-box;
+  color: #fff;
+  font-size: 14px;
+  line-height: 1;
   text-align: center;
   white-space: nowrap;
+  position: relative;
 }
+
 .xg-header.is-placeholder {
   visibility: hidden;
   position: static;

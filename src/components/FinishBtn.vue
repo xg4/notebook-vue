@@ -43,7 +43,7 @@ export default {
   border-color: #888;
 }
 .xg-checkbox-label {
-  display: block;
+  display: inline-block;
   padding: 0 5px;
 }
 .xg-checkbox-input {
@@ -75,8 +75,8 @@ export default {
   border-left: 0;
   border-top: 0;
   content: " ";
-  top: 3px;
-  left: 6px;
+  top: 4px;
+  left: 7px;
   position: absolute;
   width: 4px;
   height: 8px;

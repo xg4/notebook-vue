@@ -1,10 +1,10 @@
 <template>
-    <div class="collect-btn" @click.stop="handleCollect">
-        <transition mode="out-in" :duration="350" enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
-            <i class="icon icon-collection_fill" v-if="currentValue" key="collection_fill"></i>
-            <i class="icon icon-collection" v-else key="collection"></i>
-        </transition>
-    </div>
+  <button @click.stop="handleCollect">
+    <transition mode="out-in" :duration="350" enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
+      <i class="icon icon-collection_fill" v-if="currentValue" key="collection_fill"></i>
+      <i class="icon icon-collection" v-else key="collection"></i>
+    </transition>
+  </button>
 </template>
 
 <script>
@@ -44,10 +44,11 @@ export default {
 </script>
 
 <style scoped>
-.collect-btn {
-  margin: 0 auto;
-  width: 50%;
-  text-align: center;
+button {
+  border: none;
+  outline: none;
+  background: inherit;
+  padding: 0;
 }
 .icon-collection {
   color: rgb(198, 209, 222);

@@ -7,7 +7,13 @@ moment.locale('zh-cn');
  * @param {Date}
  * @param {Boolean} 是否友好展示
  */
-const formatDate = (date = Date.now(), friendly = false) => {
+const formatDate = (date = Date.now(), friendly) => {
+    if (!friendly) {
+        let now = Date.now();
+        let old = new Date(date).getTime();
+        // 1天=86400000毫秒 没超过1天 友好展示
+        friendly = now - old >= 86400000 ? false : true;
+    }
     date = moment(date);
     if (friendly) {
         return date.fromNow();
