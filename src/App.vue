@@ -2,7 +2,9 @@
   <div id="app">
     <xg-header fixed="fixed" :title="title"></xg-header>
     <section>
-      <router-view></router-view>
+      <keep-alive :exclude="['xg-note','xg-create-note']">
+        <router-view></router-view>
+      </keep-alive>
     </section>
     <xg-navbar fixed="fixed"></xg-navbar>
   </div>

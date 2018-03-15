@@ -5,8 +5,8 @@
       <ul class="note-info">
         <li class="note-finish note-info-item">
           <xg-finish-btn :finish="note.finish" :id="id"></xg-finish-btn>
-          <template v-if="note.finish">已完成</template>
-          <template v-else>未完成</template>
+          <span v-if="note.finish">已完成</span>
+          <span v-else>未完成</span>
         </li>
         <li class="note-tag note-info-item">
           <xg-tag-icon :type="note.tag"></xg-tag-icon>
@@ -21,7 +21,7 @@
     </div>
     <div class="note-date">
       <template v-if="!note.update_at">
-        发布于： {{ note.create_at | formatDate() }}
+        创建于： {{ note.create_at | formatDate() }}
       </template>
       <template v-else>
         编辑于： {{ note.update_at | formatDate() }}
@@ -83,8 +83,8 @@ export default {
   margin: 0 10px;
   font-size: 1em;
   line-height: 2em;
-  font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
   color: #34495e;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -116,9 +116,15 @@ export default {
 }
 
 .note-title .note-info .note-info-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
+}
+.note-finish > span:last-child {
+  margin-left: 10px;
 }
 
 .note-content p {

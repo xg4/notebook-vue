@@ -2,7 +2,7 @@
   <header>
     <div class="xg-header" :class="{ 'is-fixed': fixed }">
       <div class="xg-header-button is-left">
-        <mt-button @click="back" icon="back">返回</mt-button>
+        <mt-button @click="handleBack" icon="back">返回</mt-button>
       </div>
       <h1 class="xg-header-title" v-text="title"></h1>
       <div class="xg-header-button is-right">
@@ -21,7 +21,7 @@ export default {
     title: String
   },
   methods: {
-    back() {
+    handleBack() {
       this.$router.back();
     }
   }

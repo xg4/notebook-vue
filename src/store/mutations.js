@@ -14,7 +14,7 @@ export default {
         note.collect = !note.collect
     },
     [types.CREATE_NOTE](state, note) {
-        state.notes.push(note)
+        state.notes.unshift(note)
     },
     [types.GET_NOTE](state, note_id) {
         state.note_id = note_id

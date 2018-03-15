@@ -1,6 +1,6 @@
 <template>
   <span @click.stop="handleFinish">
-    <transition name="fade" mode="out-in">
+    <transition enter-active-class="animated wobble">
       <i class="icon icon-finish" v-if="finish" key="true"></i>
       <i class="icon icon-unfinish" v-else key="false"></i>
     </transition>
@@ -43,6 +43,7 @@ export default {
 .icon {
   font-size: 25px;
   color: #409eff;
+  display: block;
 }
 
 .icon-unfinish {

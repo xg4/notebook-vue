@@ -8,6 +8,7 @@ const NotesUnfinish = () => import('@/components/NotesUnfinish')
 const CreateNote = () => import('@/components/Create')
 const NotesCollect = () => import('@/components/NotesCollect')
 const Note = () => import('@/components/Note')
+const User = () => import('@/components/User')
 
 Vue.use(Router)
 
@@ -66,6 +67,13 @@ const router = new Router({
       title: '详情'
     },
     component: Note
+  }, {
+    path: '/me',
+    name: 'User',
+    meta: {
+      title: '我'
+    },
+    component: User
   }]
 })
 

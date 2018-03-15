@@ -1,6 +1,6 @@
 <template>
   <span @click.stop="handleCollect">
-    <transition mode="out-in" :duration="350" enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
+    <transition enter-active-class="animated tada">
       <i class="icon icon-collection_fill" v-if="collect" key="true"></i>
       <i class="icon icon-collection" v-else key="false"></i>
     </transition>
@@ -42,10 +42,10 @@ export default {
 <style scoped>
 .icon {
   font-size: 20px;
+  display: block;
 }
 .icon-collection {
   color: rgb(198, 209, 222);
-  /* color: #000; */
 }
 .icon-collection_fill {
   color: rgb(247, 186, 42);

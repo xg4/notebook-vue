@@ -4,7 +4,9 @@
             <i class="icon icon-404"></i>
         </div>
         <div>
-            没有找到此记录，请查看ID是否有误！
+            <slot name="content">
+                没有找到此记录，请查看ID是否有误！
+            </slot>
         </div>
     </div>
 </template>

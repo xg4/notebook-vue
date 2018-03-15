@@ -60,6 +60,7 @@ import { getNoteId } from "@/utils";
 import { CREATE_NOTE } from "../store/types";
 
 export default {
+  name: "xg-create-note",
   data() {
     return {
       loadingFlag: false,

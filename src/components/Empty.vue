@@ -4,7 +4,9 @@
       <i class="icon icon-empty"></i>
     </div>
     <div>
-      空
+      <slot name="content">
+        空
+      </slot>
     </div>
   </div>
 </template>

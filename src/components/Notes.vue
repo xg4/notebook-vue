@@ -1,8 +1,10 @@
 <template>
   <div>
     <xg-tab></xg-tab>
-    <transition>
-      <router-view></router-view>
+    <transition enter-active-class="animated lightSpeedIn">
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </transition>
   </div>
 </template>
