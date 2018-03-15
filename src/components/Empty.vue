@@ -1,13 +1,11 @@
 <template>
   <div class="xg-empty">
-    <slot>
-      <div>
-        <i class="icon icon-empty"></i>
-      </div>
-      <div>
-        空
-      </div>
-    </slot>
+    <div>
+      <i class="icon icon-empty"></i>
+    </div>
+    <div>
+      空
+    </div>
   </div>
 </template>
 

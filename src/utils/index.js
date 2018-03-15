@@ -54,12 +54,11 @@ const renderFile = (fileDOM) => {
     return new Promise((resolve, reject) => {
         let file;
         file = fileDOM.files[0];
-        console.log(file);
         // 文件为空
         if (!file) {
             reject('文件为空，请选择.json文件！')
         }
-        // 文件是否为JSON
+        // 文件是否为.json
         let reg = /\.json$/i;
         if (!reg.test(file.name)) {
             reject('只能读取.json文件，请选择.json文件导入信息！')
@@ -83,7 +82,7 @@ const renderFile = (fileDOM) => {
 /**
  * @description 使用uuid根据timestamp生成id
  */
-const getID = () => {
+const getNoteId = () => {
     return uuidv1();
 }
 
@@ -92,12 +91,13 @@ const getID = () => {
  */
 const local = {
     get(key) {
-        let notes = localStorage.getItem(key) || "[]"
+        let notes = localStorage.getItem(key) || "[]";
         return JSON.parse(notes);
     },
-    set(key, val) {
-        localStorage.setItem(key, JSON.stringify(val));
+    set(key, notes) {
+        notes = JSON.stringify(notes);
+        localStorage.setItem(key, notes);
     }
 }
 
-export { formatDate, downloadJSONFile, getID, local, renderFile }
+export { formatDate, downloadJSONFile, getNoteId, local, renderFile }

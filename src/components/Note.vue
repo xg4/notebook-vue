@@ -4,7 +4,7 @@
       <h2>{{ note.title }}</h2>
       <ul class="note-info">
         <li class="note-finish note-info-item">
-          <xg-finish-btn v-model="note.finish"></xg-finish-btn>
+          <xg-finish-btn :finish="note.finish" :id="id"></xg-finish-btn>
           <template v-if="note.finish">已完成</template>
           <template v-else>未完成</template>
         </li>
@@ -12,7 +12,7 @@
           <xg-tag-icon :type="note.tag"></xg-tag-icon>
         </li>
         <li class="note-collect note-info-item">
-          <xg-collect-btn v-model="note.collect"></xg-collect-btn>
+          <xg-collect-btn :collect="note.collect" :id="id"></xg-collect-btn>
         </li>
       </ul>
     </div>
@@ -28,68 +28,48 @@
       </template>
     </div>
   </div>
-  <xg-empty v-else>
-    <div>
-      <i class="icon icon-404" style="font-size:128px"></i>
-    </div>
-    <div>
-      没有找到此记录，请查看ID是否有误！
-    </div>
-  </xg-empty>
+  <xg-404 v-else></xg-404>
 </template>
 
 <script>
+import { GET_NOTE } from "../store/types";
+import { formatDate } from "@/utils";
 import XgTagIcon from "@/components/TagIcon";
 import XgCollectBtn from "@/components/CollectBtn";
 import XgFinishBtn from "@/components/FinishBtn";
-import XgEmpty from "@/components/Empty";
-import { local, formatDate } from "@/utils";
+import Xg404 from "@/components/404";
 
 export default {
   name: "xg-note",
-  mounted() {
-    let id = this.$route.params.id;
-    this.getData();
-    this.getNoteById(id);
+  beforeMount() {
+    this.id = this.$route.params.id;
+    this.getNoteById();
   },
   data() {
     return {
-      notes: [],
-      note: null
+      id: "",
+      note: ""
     };
   },
   methods: {
-    getNoteById(id) {
-      let index;
-      this.notes.some((n, i) => {
-        if (n.id == id) {
-          index = i;
-          return true;
-        }
-        return false;
-      });
-      this.note = index >= 0 ? this.notes[index] : null;
-    },
-    getData() {
-      this.notes = local.get("notes");
-    },
-    saveData(newNotes) {
-      local.set("notes", newNotes);
-    }
-  },
-  watch: {
-    notes: {
-      handler(newNotes) {
-        this.saveData(newNotes);
-      },
-      deep: true
+    getNoteById() {
+      this.$store
+        .dispatch(GET_NOTE, this.id)
+        .then(() => {
+          this.note = this.$store.getters.getNoteById;
+        })
+        .catch(() => {
+          this.$toast({
+            message: "获取数据失败"
+          });
+        });
     }
   },
   components: {
     XgTagIcon,
     XgCollectBtn,
     XgFinishBtn,
-    XgEmpty
+    Xg404
   },
   filters: {
     // date filter

@@ -29,24 +29,21 @@ const router = new Router({
       meta: {
         title: '记事本 - 全部'
       },
-      component: NotesAll,
-      props: true
+      component: NotesAll
     }, {
       path: 'finish',
       name: 'NotesFinish',
       meta: {
         title: '记事本 - 已完成',
       },
-      component: NotesFinish,
-      props: true
+      component: NotesFinish
     }, {
       path: 'unfinish',
       name: 'NotesUnfinish',
       meta: {
         title: '记事本 - 未完成'
       },
-      component: NotesUnfinish,
-      props: true
+      component: NotesUnfinish
     }]
   }, {
     path: '/creat/note',
@@ -73,7 +70,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  // document.title = to.meta.title
+  document.title = to.meta.title
   next();
 })
 

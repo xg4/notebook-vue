@@ -118,4 +118,7 @@ export default {
   font-size: 12px;
   line-height: 1;
 }
+.icon {
+  font-size: 20px;
+}
 </style>

@@ -1,54 +1,47 @@
 <template>
-  <button @click.stop="handleCollect">
+  <span @click.stop="handleCollect">
     <transition mode="out-in" :duration="350" enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
-      <i class="icon icon-collection_fill" v-if="currentValue" key="collection_fill"></i>
-      <i class="icon icon-collection" v-else key="collection"></i>
+      <i class="icon icon-collection_fill" v-if="collect" key="true"></i>
+      <i class="icon icon-collection" v-else key="false"></i>
     </transition>
-  </button>
+  </span>
 </template>
 
 <script>
+import { COLLECT_NOTE } from "../store/types";
+
 export default {
   name: "xg-collect-btn",
-  props: ["value"],
-  data() {
-    return {
-      currentValue: this.value
-    };
-  },
-  watch: {
-    value(val) {
-      this.currentValue = val;
-    },
-    currentValue(val) {
-      // 通知父组件collect改变
-      this.$emit("input", val);
-      // toast提示
-      if (val) {
-        this.$toast({
-          message: "收藏成功"
-        });
-      } else {
-        this.$toast({
-          message: "取消收藏"
-        });
-      }
-    }
-  },
+  props: ["collect", "id"],
   methods: {
     handleCollect() {
-      this.currentValue = !this.currentValue;
+      this.$store
+        .dispatch(COLLECT_NOTE, this.id)
+        .then(() => {
+          // toast提示
+          if (!this.collect) {
+            this.$toast({
+              message: "收藏成功"
+            });
+          } else {
+            this.$toast({
+              message: "取消收藏"
+            });
+          }
+        })
+        .catch(() => {
+          this.$toast({
+            message: "收藏失败"
+          });
+        });
     }
   }
 };
 </script>
 
 <style scoped>
-button {
-  border: none;
-  outline: none;
-  background: inherit;
-  padding: 0;
+.icon {
+  font-size: 20px;
 }
 .icon-collection {
   color: rgb(198, 209, 222);

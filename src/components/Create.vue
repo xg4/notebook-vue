@@ -48,27 +48,27 @@
         <el-switch v-model="form.finish"></el-switch>
       </el-form-item>
       <el-form-item label-width="0" class="form-btn-group">
-        <el-button :loading="loading" type="primary" @click="submitForm('noteForm')">提交</el-button>
-        <el-button :loading="reset" @click="resetForm('noteForm')">重置</el-button>
+        <el-button :loading="loadingFlag" type="primary" @click="submitForm()">提交</el-button>
+        <el-button :loading="resetFlag" @click="resetForm()">重置</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-import { getID, local } from "@/utils";
+import { getNoteId } from "@/utils";
+import { CREATE_NOTE } from "../store/types";
 
 export default {
   data() {
     return {
-      notes: [],
-      loading: false,
-      reset: false,
+      loadingFlag: false,
+      resetFlag: false,
       form: {
         id: "",
         title: "",
         content: "",
-        tag: "",
+        tag: "primary",
         finish: false,
         collect: false,
         create_at: "",
@@ -81,43 +81,26 @@ export default {
       }
     };
   },
-  mounted() {
-    this.getData();
-    // 初始化id date tag
-    this.getNoteId();
-    this.form.tag = "primary";
+  beforeMount() {
+    // 通过utils得到id
+    this.form.id = getNoteId();
   },
   methods: {
-    saveData(newNotes) {
-      local.set("notes", newNotes);
-    },
-    getData() {
-      this.notes = local.get("notes");
-    },
-    getNoteId() {
-      let id = getID();
-      while (this.findNoteById(id)) {
-        id = getID();
-      }
-      this.form.id = id;
-    },
-    findNoteById(id) {
-      this.notes.some(n => n.id == id);
-    },
-    resetForm(formName) {
+    resetForm() {
       // 重置表单
-      this.reset = true;
+      this.resetFlag = true;
+
       setTimeout(() => {
-        this.$refs[formName].resetFields();
+        this.$refs.noteForm.resetFields();
         this.form.finish = false;
         this.form.collect = false;
         this.form.tag = "primary";
-        // reset flag
-        this.reset = false;
+
+        this.resetFlag = false;
       }, 100);
     },
     submitForm(formName) {
-      this.loading = true;
+      this.loadingFlag = true;
       // Indicator
       this.$indicator.open({
         spinnerType: "fading-circle"
@@ -125,23 +108,29 @@ export default {
       setTimeout(() => {
         this.$indicator.close();
         // 验证表单
-        this.$refs[formName].validate(valid => {
+        this.$refs.noteForm.validate(valid => {
           if (valid) {
-            // 成功
+            // 验证成功
             this.form.create_at = new Date();
-            this.notes.push(this.form);
-            this.saveData(this.notes);
-            this.$messagebox.alert("新建成功").then(action => {
-              this.$router.push("/");
-            });
+            // dispatch store
+            this.$store
+              .dispatch(CREATE_NOTE, this.form)
+              .then(() => {
+                this.$messagebox.alert("新建成功").then(action => {
+                  this.$router.push("/");
+                });
+              })
+              .catch(() => {
+                this.$toast({ message: "新建失败" });
+              });
           } else {
-            // 失败
-            this.$toast({ message: "新建失败" });
+            // 验证失败
+            this.$toast({ message: "信息不完整" });
             return false;
           }
         });
-        // btn loading flag
-        this.loading = false;
+
+        this.loadingFlag = false;
       }, 1000);
     }
   }

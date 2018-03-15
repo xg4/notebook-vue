@@ -5,7 +5,7 @@
         <xg-tag-icon :type="note.tag"></xg-tag-icon>
       </div>
       <div class="xg-note-card-finish">
-        <xg-finish-btn v-model="note.finish"></xg-finish-btn>
+        <xg-finish-btn :finish="note.finish" :id="note.id"></xg-finish-btn>
       </div>
       <div class="xg-note-card-header">
         <div class="xg-note-card-title">{{ note.title }}</div>
@@ -16,7 +16,7 @@
           {{ note.content }}
         </div>
         <div class="xg-note-card-collect">
-          <xg-collect-btn v-model="note.collect"></xg-collect-btn>
+          <xg-collect-btn :collect="note.collect" :id="note.id"></xg-collect-btn>
         </div>
       </div>
     </div>
@@ -24,10 +24,10 @@
 </template>
 
 <script>
+import { formatDate } from "@/utils";
 import XgFinishBtn from "@/components/FinishBtn";
 import XgCollectBtn from "@/components/CollectBtn";
 import XgTagIcon from "@/components/TagIcon";
-import { formatDate } from "@/utils";
 
 export default {
   name: "xg-note-card",
@@ -67,7 +67,10 @@ export default {
 
 .xg-note-card-finish {
   position: absolute;
-  top: 32px;
+  top: 30px;
+  width: 32px;
+  height: 32px;
+  text-align: center;
 }
 
 .xg-note-card-icon {
@@ -77,12 +80,6 @@ export default {
   width: 32px;
   height: 32px;
   text-align: center;
-}
-
-.xg-note-card-icon .icon {
-  display: block;
-  width: 100%;
-  height: 100%;
 }
 
 .xg-note-card-header {

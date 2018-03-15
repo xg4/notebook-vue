@@ -1,5 +1,5 @@
 <template>
-    <i class="icon icon-tag" :class="type"></i>
+  <i class="icon icon-tag" :class="type"></i>
 </template>
 
 <script>
@@ -10,6 +10,9 @@ export default {
 </script>
 
 <style scoped>
+.icon {
+  font-size: 20px;
+}
 .icon-tag {
   color: #409eff;
 }
