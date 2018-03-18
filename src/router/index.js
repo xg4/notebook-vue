@@ -9,6 +9,7 @@ const CreateNote = () => import('@/components/Create')
 const NotesCollect = () => import('@/components/NotesCollect')
 const Note = () => import('@/components/Note')
 const User = () => import('@/components/User')
+const NoteEdit = () => import('@/components/Edit')
 
 Vue.use(Router)
 
@@ -20,7 +21,8 @@ const router = new Router({
     path: '/notes',
     name: 'Notes',
     meta: {
-      title: '记事本'
+      title: '记事本',
+      sheetName: 'notes_sheet'
     },
     component: Notes,
     redirect: '/notes/all',
@@ -28,7 +30,8 @@ const router = new Router({
       path: 'all',
       name: 'NotesAll',
       meta: {
-        title: '记事本 - 全部'
+        title: '记事本 - 全部',
+        sheetName: 'notes_sheet'
       },
       component: NotesAll
     }, {
@@ -36,18 +39,20 @@ const router = new Router({
       name: 'NotesFinish',
       meta: {
         title: '记事本 - 已完成',
+        sheetName: 'notes_sheet'
       },
       component: NotesFinish
     }, {
       path: 'unfinish',
       name: 'NotesUnfinish',
       meta: {
-        title: '记事本 - 未完成'
+        title: '记事本 - 未完成',
+        sheetName: 'notes_sheet'
       },
       component: NotesUnfinish
     }]
   }, {
-    path: '/creat/note',
+    path: '/create/note',
     name: 'CreateNote',
     meta: {
       title: '新建'
@@ -64,7 +69,9 @@ const router = new Router({
     path: '/note/:id',
     name: 'Note',
     meta: {
-      title: '详情'
+      title: '详情',
+      sheetName: 'note_sheet',
+      showBack: true
     },
     component: Note
   }, {
@@ -74,6 +81,14 @@ const router = new Router({
       title: '我'
     },
     component: User
+  }, {
+    path: '/note/:id/edit',
+    name: 'NoteEdit',
+    meta: {
+      title: '编辑',
+      showBack: true
+    },
+    component: NoteEdit
   }]
 })
 

@@ -1,18 +1,20 @@
+import { bubbleSortByTime } from '@/utils'
+
 export default {
-    // TODO：排序工具函数
-    getNoteById(state) {
-        return state.notes.find(note => note.id == state.note_id)
-    },
     allNotes(state) {
-        return state.notes;
+        let notes = state.notes
+        return bubbleSortByTime(notes, 'update_at', state.sort_by_time);
     },
     finishNotes(state) {
-        return state.notes.filter(note => note.finish)
+        let notes = state.notes.filter(note => note.finish)
+        return bubbleSortByTime(notes, 'update_at', state.sort_by_time);
     },
     unfinishNotes(state) {
-        return state.notes.filter(note => !note.finish)
+        let notes = state.notes.filter(note => !note.finish)
+        return bubbleSortByTime(notes, 'update_at', state.sort_by_time);
     },
     collectNotes(state) {
-        return state.notes.filter(note => note.collect)
-    }
+        let notes = state.notes.filter(note => note.collect)
+        return bubbleSortByTime(notes, 'update_at', state.sort_by_time);
+    },
 }

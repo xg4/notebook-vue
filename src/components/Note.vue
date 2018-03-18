@@ -1,38 +1,37 @@
 <template>
-  <div v-if="note" class="note">
-    <div class="note-title">
-      <h2>{{ note.title }}</h2>
-      <ul class="note-info">
-        <li class="note-finish note-info-item">
-          <xg-finish-btn :finish="note.finish" :id="id"></xg-finish-btn>
-          <span v-if="note.finish">已完成</span>
-          <span v-else>未完成</span>
-        </li>
-        <li class="note-tag note-info-item">
-          <xg-tag-icon :type="note.tag"></xg-tag-icon>
-        </li>
-        <li class="note-collect note-info-item">
-          <xg-collect-btn :collect="note.collect" :id="id"></xg-collect-btn>
-        </li>
-      </ul>
-    </div>
-    <div class="note-content">
-      <p>{{ note.content }}</p>
-    </div>
-    <div class="note-date">
-      <template v-if="!note.update_at">
-        创建于： {{ note.create_at | formatDate() }}
-      </template>
-      <template v-else>
+  <div v-if="!loading">
+    <template v-if="note" class="note">
+      <div class="note-title">
+        <h2>{{ note.title }}</h2>
+        <ul class="note-info">
+          <li class="note-finish note-info-item">
+            <xg-finish-btn :finish="note.finish" :id="note.id"></xg-finish-btn>
+            <span v-if="note.finish">已完成</span>
+            <span v-else>未完成</span>
+          </li>
+          <li class="note-tag note-info-item">
+            <xg-tag-icon :type="note.tag"></xg-tag-icon>
+          </li>
+          <li class="note-collect note-info-item">
+            <xg-collect-btn :collect="note.collect" :id="note.id"></xg-collect-btn>
+            <span v-if="note.collect">已收藏</span>
+            <span v-else>未收藏</span>
+          </li>
+        </ul>
+      </div>
+      <div class="note-content">
+        <p>{{ note.content }}</p>
+      </div>
+      <div class="note-date">
         编辑于： {{ note.update_at | formatDate() }}
-      </template>
-    </div>
+      </div>
+    </template>
+    <xg-404 v-else></xg-404>
   </div>
-  <xg-404 v-else></xg-404>
 </template>
 
 <script>
-import { GET_NOTE } from "../store/types";
+import * as types from "../store/types";
 import { formatDate } from "@/utils";
 import XgTagIcon from "@/components/TagIcon";
 import XgCollectBtn from "@/components/CollectBtn";
@@ -42,26 +41,40 @@ import Xg404 from "@/components/404";
 export default {
   name: "xg-note",
   beforeMount() {
-    this.id = this.$route.params.id;
-    this.getNoteById();
+    this.getNote();
   },
   data() {
     return {
-      id: "",
-      note: ""
+      note: "",
+      loading: ""
     };
   },
+  watch: {
+    loading(newVal) {
+      if (newVal) {
+        // Indicator 提示
+        this.$indicator.open({
+          spinnerType: "fading-circle"
+        });
+      } else {
+        this.$indicator.close();
+      }
+    }
+  },
   methods: {
-    getNoteById() {
+    getNote() {
+      this.loading = true;
       this.$store
-        .dispatch(GET_NOTE, this.id)
-        .then(() => {
-          this.note = this.$store.getters.getNoteById;
+        .dispatch(types.GET_NOTE, this.$route.params.id)
+        .then(note => {
+          this.note = note;
         })
         .catch(() => {
-          this.$toast({
-            message: "获取数据失败"
-          });
+          this.$toast({ message: "获取数据失败" });
+        })
+        .finally(() => {
+          this.loading = false;
+          this.$indicator.close();
         });
     }
   },
@@ -101,11 +114,11 @@ export default {
   margin: 25px 0 0.8em;
   font-weight: 600;
   color: #2c3e50;
+  word-wrap: break-word;
+  word-break: normal;
 }
 
 .note-title .note-info {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   margin-top: 0;
   margin-bottom: 0;
@@ -119,11 +132,10 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
   flex: 1;
 }
-.note-finish > span:last-child {
+
+.note-info-item > span:last-child {
   margin-left: 10px;
 }
 
@@ -132,6 +144,8 @@ export default {
   position: relative;
   z-index: 1;
   word-spacing: 0.05em;
+  word-wrap: break-word;
+  word-break: normal;
 }
 
 .note-date {

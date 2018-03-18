@@ -1,6 +1,6 @@
 <template>
   <span @click.stop="handleFinish">
-    <transition enter-active-class="animated wobble">
+    <transition mode="out-in" enter-active-class="animated wobble">
       <i class="icon icon-finish" v-if="finish" key="true"></i>
       <i class="icon icon-unfinish" v-else key="false"></i>
     </transition>
@@ -13,13 +13,31 @@ import { FINISH_NOTE } from "../store/types";
 export default {
   name: "xg-finish-btn",
   props: ["finish", "id"],
+  data() {
+    return {
+      loading: false
+    };
+  },
+  watch: {
+    loading(newVal) {
+      if (newVal) {
+        // Indicator 提示
+        this.$indicator.open({
+          spinnerType: "fading-circle"
+        });
+      } else {
+        this.$indicator.close();
+      }
+    }
+  },
   methods: {
     handleFinish() {
+      this.loading = true;
       this.$store
         .dispatch(FINISH_NOTE, this.id)
-        .then(() => {
+        .then(res => {
           // toast 提示
-          if (!this.finish) {
+          if (res) {
             this.$toast({
               message: "标记完成"
             });
@@ -33,6 +51,10 @@ export default {
           this.$toast({
             message: "标记失败"
           });
+        })
+        .finally(() => {
+          this.loading = false;
+          this.$indicator.close();
         });
     }
   }

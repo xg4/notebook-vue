@@ -10,7 +10,7 @@ const debug = process.env.NODE_ENV !== 'production'
 
 const state = {
     notes: [],
-    note_id: ''
+    sort_by_time: false,
 };
 
 export default new Vuex.Store({

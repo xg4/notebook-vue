@@ -1,7 +1,7 @@
 <template>
   <transition leave-active-class="animated bounceOutLeft">
     <div class="xg-note-card" @click="handleTo">
-      <div class="xg-note-card-icon">
+      <div class="xg-note-card-tag">
         <xg-tag-icon :type="note.tag"></xg-tag-icon>
       </div>
       <div class="xg-note-card-finish">
@@ -9,7 +9,7 @@
       </div>
       <div class="xg-note-card-header">
         <div class="xg-note-card-title">{{ note.title }}</div>
-        <div class="xg-note-card-date">{{ note.create_at | formatDate(true)}}</div>
+        <div class="xg-note-card-date">{{ note.update_at | formatDate(true)}}</div>
       </div>
       <div class="xg-note-card-body">
         <div class="xg-note-card-content">
@@ -73,9 +73,9 @@ export default {
   text-align: center;
 }
 
-.xg-note-card-icon {
+.xg-note-card-tag {
   position: absolute;
-  top: 0;
+  top: -1px;
   left: 0;
   width: 32px;
   height: 32px;

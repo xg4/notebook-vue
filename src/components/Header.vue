@@ -2,27 +2,153 @@
   <header>
     <div class="xg-header" :class="{ 'is-fixed': fixed }">
       <div class="xg-header-button is-left">
-        <mt-button @click="handleBack" icon="back">返回</mt-button>
+        <mt-button v-if="showBack" @click="handleBack" icon="back">返回</mt-button>
       </div>
       <h1 class="xg-header-title" v-text="title"></h1>
       <div class="xg-header-button is-right">
-        <mt-button icon="more"></mt-button>
+        <mt-button icon="more" @click="handleSheet" v-if="!actions.length==0"></mt-button>
       </div>
     </div>
     <div class="xg-header is-placeholder" v-if="fixed"></div>
+    <mt-actionsheet :actions="actions" v-model="sheetVisible">
+    </mt-actionsheet>
   </header>
 </template>
 
 <script>
+import * as types from "../store/types";
+
 export default {
   name: "xg-header",
   props: {
     fixed: Boolean,
     title: String
   },
+  data() {
+    return {
+      sheetVisible: false,
+      loading: "",
+      notes_sheet: [
+        {
+          name: "新建笔记",
+          method: () => {
+            this.$router.push("/create/note");
+          }
+        },
+        {
+          name: "按时间排序",
+          method: () => {
+            this.$store.commit(types.SORT_BY_TIME);
+          }
+        },
+        {
+          name: "删除已完成",
+          method: () => {
+            this.$messagebox
+              .confirm("您确定要删除全部已完成笔记?<br/>此操作不可恢复！")
+              .then(action => {
+                this.loading = true;
+                this.$store
+                  .dispatch(types.REMOVE_FINISH_NOTES)
+                  .then(() => {
+                    this.$toast({ message: "删除成功" });
+                  })
+                  .catch(() => {
+                    this.$toast({ message: "删除失败" });
+                  })
+                  .finally(() => {
+                    this.loading = false;
+                    this.$indicator.close();
+                  });
+              })
+              .catch(() => {});
+          }
+        },
+        {
+          name: "删除全部笔记",
+          method: () => {
+            this.$messagebox
+              .confirm("您确定要删除全部笔记?<br/>此操作不可恢复！")
+              .then(action => {
+                this.loading = true;
+                this.$store
+                  .dispatch(types.REMOVE_NOTES)
+                  .then(() => {
+                    this.$toast({ message: "删除成功" });
+                  })
+                  .catch(() => {
+                    this.$toast({ message: "删除失败" });
+                  })
+                  .finally(() => {
+                    this.loading = false;
+                    this.$indicator.close();
+                  });
+              })
+              .catch(() => {});
+          }
+        }
+      ],
+      note_sheet: [
+        {
+          name: "编辑",
+          method: () => {
+            this.$router.push(`/note/${this.$route.params.id}/edit`);
+          }
+        },
+        {
+          name: "删除",
+          method: () => {
+            this.$messagebox
+              .confirm("您确定要删除此笔记?<br/>此操作不可恢复！")
+              .then(action => {
+                this.loading = true;
+                this.$store
+                  .dispatch(types.REMOVE_NOTE, this.$route.params.id)
+                  .then(() => {
+                    this.$toast({ message: "删除成功" });
+                    this.$router.back();
+                  })
+                  .catch(() => {
+                    this.$toast({ message: "删除失败" });
+                  })
+                  .finally(() => {
+                    this.loading = false;
+                    this.$indicator.close();
+                  });
+              })
+              .catch(() => {});
+          }
+        }
+      ]
+    };
+  },
+  watch: {
+    loading(newVal) {
+      if (newVal) {
+        // Indicator 提示
+        this.$indicator.open({
+          spinnerType: "fading-circle"
+        });
+      } else {
+        this.$indicator.close();
+      }
+    }
+  },
+  computed: {
+    actions() {
+      let sheetName = this.$route.meta.sheetName;
+      return this[sheetName] ? this[sheetName] : [];
+    },
+    showBack() {
+      return this.$route.meta.showBack ? this.$route.meta.showBack : false;
+    }
+  },
   methods: {
     handleBack() {
       this.$router.back();
+    },
+    handleSheet() {
+      this.sheetVisible = !this.sheetVisible;
     }
   }
 };

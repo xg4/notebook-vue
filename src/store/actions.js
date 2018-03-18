@@ -1,67 +1,91 @@
 import * as types from './types'
-import { local } from '@/utils'
-// 为以后异步获取数据做准备
+import { storage } from '@/utils'
+
 export default {
-    [types.GET_NOTES]({ commit }) {
-        return new Promise((resolve, reject) => {
-            let notes = local.get('notes')
-            commit(types.GET_NOTES, notes)
-            resolve()
-        })
+    async [types.GET_NOTES]({ commit }) {
+        const notes = await storage.get('notes')
+        commit(types.GET_NOTES, notes)
     },
-    [types.FINISH_NOTE]({ dispatch, commit, state }, note_id) {
-        return new Promise((resolve, reject) => {
-            commit(types.FINISH_NOTE, note_id)
-            dispatch('saveNotes', state.notes)
-                .then(() => {
-                    resolve()
-                })
-                .catch(() => {
-                    // 异步保存失败的话，将状态变回原样
-                    commit(types.FINISH_NOTE, note_id)
-                    reject()
-                })
-        })
+    async [types.FINISH_NOTE]({ dispatch, commit, state }, note_id) {
+        const note = await dispatch(types.GET_NOTE, note_id)
+        const savedNote = { ...note }
+        try {
+            commit(types.FINISH_NOTE, note)
+            await dispatch(types.SAVE_NOTES, state.notes)
+            return note.finish
+        } catch (err) {
+            // 保存失败，将状态变回原样
+            commit(types.EDIT_NOTE, savedNote)
+            return Promise.reject()
+        }
     },
-    [types.COLLECT_NOTE]({ dispatch, commit, state }, note_id) {
-        return new Promise((resolve, reject) => {
-            commit(types.COLLECT_NOTE, note_id)
-            dispatch('saveNotes', state.notes)
-                .then(() => {
-                    resolve()
-                })
-                .catch(() => {
-                    // 异步保存失败的话，将状态变回原样
-                    commit(types.COLLECT_NOTE, note_id)
-                    reject()
-                })
-        })
+    async [types.COLLECT_NOTE]({ dispatch, commit, state }, note_id) {
+        const note = await dispatch(types.GET_NOTE, note_id)
+        const savedNote = { ...note }
+        try {
+            commit(types.COLLECT_NOTE, note)
+            await dispatch(types.SAVE_NOTES, state.notes)
+            return note.collect
+        } catch (err) {
+            // 保存失败，将状态变回原样
+            commit(types.EDIT_NOTE, savedNote)
+            return Promise.reject()
+        }
     },
-    [types.CREATE_NOTE]({ dispatch, commit, state }, note) {
-        return new Promise((resolve, reject) => {
-            // 把当前 notes 备份起来
-            const savedNotes = [...state.notes]
-            commit(types.CREATE_NOTE, note)
-            dispatch('saveNotes', state.notes)
-                .then(() => {
-                    resolve()
-                })
-                .catch(() => {
-                    commit(types.RESTORE_NOTES, savedNotes)
-                    reject()
-                })
-        })
+    async [types.CREATE_NOTE]({ dispatch, commit, state }, note) {
+        commit(types.CREATE_NOTE, note)
+        try {
+            await dispatch(types.SAVE_NOTES, state.notes)
+        } catch (err) {// 保存失败，将状态变回原样
+            commit(types.REMOVE_NOTE, note.id)
+            return Promise.reject()
+        }
     },
-    [types.GET_NOTE]({ commit }, note_id) {
-        return new Promise((resolve, reject) => {
-            commit(types.GET_NOTE, note_id)
-            resolve()
-        })
+    async [types.REMOVE_NOTES]({ dispatch, commit, state }) {
+        const savedNotes = [...state.notes]
+        commit(types.REMOVE_NOTES)
+        try {
+            await dispatch(types.SAVE_NOTES, state.notes)
+        } catch (err) {
+            commit(types.RESTORE_NOTES, savedNotes)
+            return Promise.reject()
+        }
     },
-    saveNotes({ commit }, notes) {
-        return new Promise((resolve, reject) => {
-            local.set('notes', notes)
-            resolve()
-        })
+    async [types.REMOVE_FINISH_NOTES]({ dispatch, commit, state }) {
+        const savedNotes = [...state.notes]
+        commit(types.REMOVE_FINISH_NOTES)
+        try {
+            await dispatch(types.SAVE_NOTES, state.notes)
+        } catch (err) {
+            commit(types.RESTORE_NOTES, savedNotes)
+            return Promise.reject()
+        }
+    },
+    async [types.REMOVE_NOTE]({ dispatch, commit, state }, note_id) {
+        const savedNotes = [...state.notes]
+        commit(types.REMOVE_NOTE, note_id)
+        try {
+            await dispatch(types.SAVE_NOTES, state.notes)
+        } catch (err) {
+            commit(types.RESTORE_NOTES, savedNotes)
+            return Promise.reject()
+        }
+    },
+    async [types.GET_NOTE]({ commit, state }, note_id) {
+        return await state.notes.find(note => note.id == note_id)
+    },
+    async [types.EDIT_NOTE]({ dispatch, commit, state }, newNote) {
+        const note = await dispatch(types.GET_NOTE, newNote.id)
+        const savedNote = { ...note }
+        commit(types.EDIT_NOTE, note)
+        try {
+            await dispatch(types.SAVE_NOTES, state.notes)
+        } catch (err) {
+            commit(types.EDIT_NOTE, savedNote)
+            return Promise.reject()
+        }
+    },
+    async [types.SAVE_NOTES]({ commit }, notes) {
+        await storage.set('notes', notes)
     },
 }

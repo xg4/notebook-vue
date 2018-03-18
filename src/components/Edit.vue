@@ -49,21 +49,21 @@
       </el-form-item>
       <el-form-item label-width="0" class="form-btn-group">
         <el-button :loading="loading" type="primary" @click="submitForm()">提交</el-button>
-        <el-button @click="resetForm()">重置</el-button>
+        <el-button @click="restoreForm()">恢复</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-import { getNoteId } from "@/utils";
-import { CREATE_NOTE } from "../store/types";
+import * as types from "../store/types";
 
 export default {
-  name: "xg-create-note",
+  name: "xg-edit-note",
   data() {
     return {
-      loading: false,
+      loading: "",
+      note: "",
       form: {
         id: "",
         title: "",
@@ -82,8 +82,7 @@ export default {
     };
   },
   beforeMount() {
-    // 通过utils得到id
-    this.form.id = getNoteId();
+    this.getNote();
   },
   watch: {
     loading(newVal) {
@@ -98,12 +97,24 @@ export default {
     }
   },
   methods: {
-    resetForm() {
-      // 重置表单
-      this.$refs.noteForm.resetFields();
-      this.form.finish = false;
-      this.form.collect = false;
-      this.form.tag = "primary";
+    getNote() {
+      this.loading = true;
+      this.$store
+        .dispatch(types.GET_NOTE, this.$route.params.id)
+        .then(note => {
+          this.note = note;
+          this.form = { ...note };
+        })
+        .catch(() => {
+          this.$toast({ message: "获取数据失败" });
+        })
+        .finally(() => {
+          this.loading = false;
+          this.$indicator.close();
+        });
+    },
+    restoreForm() {
+      this.form = { ...this.note };
     },
     submitForm() {
       this.loading = true;
@@ -112,18 +123,17 @@ export default {
       this.$refs.noteForm.validate(valid => {
         if (valid) {
           // 验证成功
-          this.form.create_at = new Date();
           this.form.update_at = new Date();
           // dispatch store
           this.$store
-            .dispatch(CREATE_NOTE, this.form)
+            .dispatch(types.EDIT_NOTE, this.form)
             .then(() => {
-              this.$messagebox.alert("新建成功").then(action => {
+              this.$messagebox.alert("编辑成功").then(action => {
                 this.$router.push(`/note/${this.form.id}`);
               });
             })
             .catch(() => {
-              this.$toast({ message: "新建失败，请重试" });
+              this.$toast({ message: "编辑失败，请重试" });
             })
             .finally(() => {
               this.loading = false;

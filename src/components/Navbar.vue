@@ -9,7 +9,7 @@
           记事本
         </div>
       </router-link>
-      <router-link class="xg-navbar-item" to="/creat/note">
+      <router-link class="xg-navbar-item" to="/create/note">
         <div class="xg-navbar-item-icon">
           <i class="icon icon-create"></i>
         </div>
