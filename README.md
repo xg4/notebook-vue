@@ -1,6 +1,6 @@
 # notebook-vue
 
-> A Vue.js project
+> A mobile notebook for vue.js
 
 ## Demo
 [https://xg4.github.io/notebook-vue/](https://xg4.github.io/notebook-vue/)

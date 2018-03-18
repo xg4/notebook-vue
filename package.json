@@ -1,13 +1,18 @@
 {
   "name": "notebook-vue",
   "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "xg4 <xingor4@gmail.com>",
+  "description": "A mobile notebook for vue.js",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js"
+  },
+  "author": "xg4 <xingor4@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xg4/notebook-vue.git"
   },
   "dependencies": {
     "element-ui": "^2.2.1",
@@ -66,6 +71,10 @@
     "webpack-dev-server": "^2.9.1",
     "webpack-merge": "^4.1.0"
   },
+  "bugs": {
+    "url": "https://github.com/xg4/notebook-vue/issues"
+  },
+  "homepage": "https://github.com/xg4/notebook-vue#readme",
   "engines": {
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
