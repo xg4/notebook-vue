@@ -2,13 +2,26 @@
 
 > A Vue.js project
 
+## Demo
+[https://xg4.github.io/notebook-vue/](https://xg4.github.io/notebook-vue/)
+
+## Features
+
+- 搜索笔记
+
+- 用户自定义主题色
+
+- 支持markdown语法
+
+- 用户自定义标签名字
+
 ## Build Setup
 
 ``` bash
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at localhost:80
 npm run dev
 
 # build for production with minification
@@ -18,4 +31,6 @@ npm run build
 npm run build --report
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## License
+
+MIT
