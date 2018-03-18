@@ -77,7 +77,7 @@ export default {
     async [types.EDIT_NOTE]({ dispatch, commit, state }, newNote) {
         const note = await dispatch(types.GET_NOTE, newNote.id)
         const savedNote = { ...note }
-        commit(types.EDIT_NOTE, note)
+        commit(types.EDIT_NOTE, newNote)
         try {
             await dispatch(types.SAVE_NOTES, state.notes)
         } catch (err) {
