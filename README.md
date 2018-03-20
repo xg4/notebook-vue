@@ -5,20 +5,6 @@
 ## Demo
 [https://xg4.github.io/notebook-vue/](https://xg4.github.io/notebook-vue/)
 
-## Features
-
-- 搜索笔记
-
-- 用户自定义主题色
-
-- 支持markdown语法
-
-- 用户自定义标签名字
-
-- refactor style by LESS
-
-- import/export notes by QR Code
-
 ## Build Setup
 
 ``` bash
