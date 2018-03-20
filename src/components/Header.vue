@@ -164,7 +164,7 @@ export default {
   align-items: center;
   padding: 0 10px;
   height: 40px;
-  background-color: #26a2ff;
+  background-image: linear-gradient(90deg, #0af, #0085ff);
   box-sizing: border-box;
   color: #fff;
   font-size: 14px;
@@ -216,7 +216,7 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: inherit;
-  font-weight: 400;
+  font-weight: 600;
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;

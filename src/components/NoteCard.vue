@@ -52,13 +52,11 @@ export default {
 
 <style scoped>
 .xg-note-card {
-  margin: 15px 0;
+  margin: 15px 10px;
   border-radius: 8px;
   border: 1px solid #ebeef5;
   background-color: #fff;
   overflow: hidden;
-  -webkit-box-shadow: 0 0 8px 0 rgba(232, 237, 250, 0.6),
-    0 2px 4px 0 rgba(232, 237, 250, 0.5);
   box-shadow: 0 0 8px 0 rgba(232, 237, 250, 0.6),
     0 2px 4px 0 rgba(232, 237, 250, 0.5);
   color: #303133;
@@ -86,11 +84,8 @@ export default {
   margin-left: 32px;
   padding: 10px 5px;
   border-bottom: 1px solid #ebeef5;
-  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   font-weight: bolder;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   justify-content: space-between;
 }
@@ -106,15 +101,13 @@ export default {
 .xg-note-card-date {
   width: 20%;
   text-align: center;
-  font-size: 0.2rem;
+  font-size: 8px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .xg-note-card-body {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   justify-content: space-between;
   margin-left: 32px;

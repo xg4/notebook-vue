@@ -16,6 +16,8 @@ export const REMOVE_FINISH_NOTES = 'REMOVE_FINISH_NOTES'
 export const RESTORE_NOTES = 'RESTORE_NOTES'
 // 编辑 note
 export const EDIT_NOTE = 'EDIT_NOTE'
+// 上传 notes
+export const UPLOAD_NOTES = 'UPLOAD_NOTES'
 /**
  * only commit
  */

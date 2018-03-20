@@ -1,6 +1,6 @@
 <template>
-  <div v-if="!loading">
-    <template v-if="note" class="note">
+  <div v-if="!loading" class="note">
+    <template v-if="note" >
       <div class="note-title">
         <h2>{{ note.title }}</h2>
         <ul class="note-info">
@@ -93,7 +93,7 @@ export default {
 
 <style scoped>
 .note {
-  margin: 0 10px;
+  padding: 10px;
   font-size: 1em;
   line-height: 2em;
   color: #34495e;

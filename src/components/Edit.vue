@@ -48,8 +48,8 @@
         <el-switch v-model="form.finish"></el-switch>
       </el-form-item>
       <el-form-item label-width="0" class="form-btn-group">
-        <el-button :loading="loading" type="primary" @click="submitForm()">提交</el-button>
-        <el-button @click="restoreForm()">恢复</el-button>
+        <mt-button size="large" :disabled="loading" type="primary" @click="submitForm()">提交</mt-button>
+        <mt-button size="large" @click="restoreForm()">重置</mt-button>
       </el-form-item>
     </el-form>
   </div>
@@ -154,8 +154,9 @@ export default {
 <style scoped>
 .xg-form {
   margin-top: 10px;
+  padding: 10px;
 }
-.form-btn-group {
-  text-align: center;
+.form-btn-group button {
+  margin-bottom: 20px;
 }
 </style>

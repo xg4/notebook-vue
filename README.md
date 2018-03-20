@@ -15,6 +15,10 @@
 
 - 用户自定义标签名字
 
+- refactor style by LESS
+
+- import/export notes by QR Code
+
 ## Build Setup
 
 ``` bash
