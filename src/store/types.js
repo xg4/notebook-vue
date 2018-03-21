@@ -1,23 +1,27 @@
-// 获得 notes
+// get notes
 export const GET_NOTES = 'GET_NOTES'
-// 改变 note.finish 状态
+// update note.finish 状态
 export const FINISH_NOTE = 'FINISH_NOTE'
-// 改变 note.collect 状态
+// update note.collect 状态
 export const COLLECT_NOTE = 'COLLECT_NOTE'
-// 创建 note
+// create note
 export const CREATE_NOTE = 'CREATE_NOTE'
-// 删除 note
+// del note
 export const REMOVE_NOTE = 'REMOVE_NOTE'
-// 删除 notes
+// del notes
 export const REMOVE_NOTES = 'REMOVE_NOTES'
-// 删除 finish notes
+// del finish notes
 export const REMOVE_FINISH_NOTES = 'REMOVE_FINISH_NOTES'
-// 恢复 notes
+// restore notes
 export const RESTORE_NOTES = 'RESTORE_NOTES'
-// 编辑 note
+// edit note
 export const EDIT_NOTE = 'EDIT_NOTE'
-// 上传 notes
+// upload notes
 export const UPLOAD_NOTES = 'UPLOAD_NOTES'
+// get tagMap
+export const GET_TAG_MAP = 'GET_TAG_MAP'
+// update tagMap
+export const UPDATE_TAG_MAP = 'UPDATE_TAG_MAP'
 /**
  * only commit
  */

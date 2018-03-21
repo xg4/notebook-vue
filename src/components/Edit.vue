@@ -9,34 +9,10 @@
       </el-form-item>
       <el-form-item label="标签" prop="tag">
         <el-select v-model="form.tag" placeholder="请选择标签类型">
-          <el-option label="蓝色" value="primary">
-            <span style="float: left">蓝色</span>
-            <span style="float: right; color: #409eff;">
-              <i class="icon icon-tag"></i>
-            </span>
-          </el-option>
-          <el-option label="绿色" value="success">
-            <span style="float: left">绿色</span>
-            <span style="float: right; color: #67c23a;">
-              <i class="icon icon-tag"></i>
-            </span>
-          </el-option>
-          <el-option label="灰色" value="info">
-            <span style="float: left">灰色</span>
-            <span style="float: right; color: #909399;">
-              <i class="icon icon-tag"></i>
-            </span>
-          </el-option>
-          <el-option label="黄色" value="warning">
-            <span style="float: left">黄色</span>
-            <span style="float: right; color: #e6a23c;">
-              <i class="icon icon-tag"></i>
-            </span>
-          </el-option>
-          <el-option label="红色" value="danger">
-            <span style="float: left">红色</span>
-            <span style="float: right; color: #f56c6c;">
-              <i class="icon icon-tag"></i>
+          <el-option :label="tagName" :value="tag" v-for="(tagName,tag) in tagMap" :key="tag">
+            <span style="float: left">{{tagName}}</span>
+            <span style="float: right;">
+              <i class="icon icon-tag" :class="tag"></i>
             </span>
           </el-option>
         </el-select>
@@ -59,7 +35,7 @@
 import * as types from "../store/types";
 
 export default {
-  name: "xg-edit-note",
+  name: "XgEditeNote",
   data() {
     return {
       loading: "",
@@ -83,6 +59,11 @@ export default {
   },
   beforeMount() {
     this.getNote();
+  },
+  computed: {
+    tagMap() {
+      return this.$store.state.tagMap;
+    }
   },
   watch: {
     loading(newVal) {
@@ -156,7 +137,28 @@ export default {
   margin-top: 10px;
   padding: 10px;
 }
+
 .form-btn-group button {
   margin-bottom: 20px;
+}
+
+.primary {
+  color: #409eff;
+}
+
+.success {
+  color: #67c23a;
+}
+
+.info {
+  color: #909399;
+}
+
+.warning {
+  color: #e6a23c;
+}
+
+.danger {
+  color: #f56c6c;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <footer>
+  <footer v-if="showNavbar">
     <nav class="xg-navbar" :class="{'is-fixed':fixed}">
       <router-link class="xg-navbar-item" to="/notes">
         <div class="xg-navbar-item-icon">
@@ -25,7 +25,7 @@
           收藏
         </div>
       </router-link>
-      <router-link class="xg-navbar-item" to="/me">
+      <router-link class="xg-navbar-item" to="/profile">
         <div class="xg-navbar-item-icon">
           <i class="icon icon-user"></i>
         </div>
@@ -43,6 +43,11 @@ export default {
   name: "xg-navbar",
   props: {
     fixed: Boolean
+  },
+  computed: {
+    showNavbar() {
+      return this.$route.meta.showNavbar;
+    }
   }
 };
 </script>

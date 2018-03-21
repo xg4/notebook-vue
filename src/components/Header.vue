@@ -140,7 +140,7 @@ export default {
       return this[sheetName] ? this[sheetName] : [];
     },
     showBack() {
-      return this.$route.meta.showBack ? this.$route.meta.showBack : false;
+      return this.$route.meta.showBack;
     }
   },
   methods: {

@@ -48,4 +48,10 @@ export default {
     let newNotes = mergeNotes(state.notes, notes)
     state.notes = newNotes
   },
+  [types.GET_TAG_MAP](state, tagMap) {
+    state.tagMap = tagMap
+  },
+  [types.UPDATE_TAG_MAP](state, newTagMap) {
+    state.tagMap = newTagMap
+  },
 }

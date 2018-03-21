@@ -55,7 +55,7 @@ const getNoteId = () => {
  */
 const storage = {
   get(key) {
-    let notes = localStorage.getItem(key) || "[]";
+    let notes = localStorage.getItem(key);
     return JSON.parse(notes);
   },
   set(key, notes) {

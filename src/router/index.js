@@ -1,15 +1,26 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-const Notes = () => import('@/components/Notes')
-const NotesAll = () => import('@/components/NotesAll')
-const NotesFinish = () => import('@/components/NotesFinish')
-const NotesUnfinish = () => import('@/components/NotesUnfinish')
-const CreateNote = () => import('@/components/Create')
-const NotesCollect = () => import('@/components/NotesCollect')
-const Note = () => import('@/components/Note')
-const User = () => import('@/components/User')
-const NoteEdit = () => import('@/components/Edit')
+const Notes = () =>
+  import ( /* webpackChunkName: "notes" */ '@/components/Notes')
+const NotesAll = () =>
+  import ( /* webpackChunkName: "notes" */ '@/components/NotesAll')
+const NotesFinish = () =>
+  import ( /* webpackChunkName: "notes" */ '@/components/NotesFinish')
+const NotesUnfinish = () =>
+  import ( /* webpackChunkName: "notes" */ '@/components/NotesUnfinish')
+const CreateNote = () =>
+  import ('@/components/Create')
+const NotesCollect = () =>
+  import ('@/components/NotesCollect')
+const Note = () =>
+  import ('@/components/Note')
+const Profile = () =>
+  import ('@/components/Profile')
+const NoteEdit = () =>
+  import ('@/components/Edit')
+const SetTag = () =>
+  import ('@/components/SetTag')
 
 Vue.use(Router)
 
@@ -19,19 +30,16 @@ const router = new Router({
     redirect: '/notes'
   }, {
     path: '/notes',
-    name: 'Notes',
-    meta: {
-      title: '记事本',
-      sheetName: 'notes_sheet'
-    },
-    component: Notes,
     redirect: '/notes/all',
+    component: Notes,
     children: [{
       path: 'all',
       name: 'NotesAll',
       meta: {
-        title: '记事本 - 全部',
-        sheetName: 'notes_sheet'
+        title: '记事本',
+        sheetName: 'notes_sheet',
+        keepAlive: 'XgNotes',
+        showNavbar: true
       },
       component: NotesAll
     }, {
@@ -39,7 +47,8 @@ const router = new Router({
       name: 'NotesFinish',
       meta: {
         title: '记事本 - 已完成',
-        sheetName: 'notes_sheet'
+        sheetName: 'notes_sheet',
+        showNavbar: true
       },
       component: NotesFinish
     }, {
@@ -47,7 +56,8 @@ const router = new Router({
       name: 'NotesUnfinish',
       meta: {
         title: '记事本 - 未完成',
-        sheetName: 'notes_sheet'
+        sheetName: 'notes_sheet',
+        showNavbar: true
       },
       component: NotesUnfinish
     }]
@@ -55,19 +65,22 @@ const router = new Router({
     path: '/create/note',
     name: 'CreateNote',
     meta: {
-      title: '新建'
+      title: '新建',
+      showNavbar: true
     },
     component: CreateNote
   }, {
     path: '/collection',
-    name: 'NotesCollect',
+    name: 'Collection',
     meta: {
-      title: '收藏'
+      title: '收藏',
+      keepAlive: 'XgCollection',
+      showNavbar: true
     },
     component: NotesCollect
   }, {
     path: '/note/:id',
-    name: 'Note',
+    name: 'XgNote',
     meta: {
       title: '详情',
       sheetName: 'note_sheet',
@@ -75,15 +88,25 @@ const router = new Router({
     },
     component: Note
   }, {
-    path: '/me',
-    name: 'User',
+    path: '/profile',
+    name: 'Profile',
     meta: {
-      title: '我'
+      title: '我',
+      keepAlive: 'XgProfile',
+      showNavbar: true
     },
-    component: User
+    component: Profile
+  }, {
+    path: '/profile/tag',
+    name: 'SetTag',
+    meta: {
+      title: '设置标签',
+      showBack: true
+    },
+    component: SetTag
   }, {
     path: '/note/:id/edit',
-    name: 'NoteEdit',
+    name: 'EditeNote',
     meta: {
       title: '编辑',
       showBack: true

@@ -2,7 +2,7 @@
   <div id="app">
     <xg-header fixed="fixed" :title="title"></xg-header>
     <section>
-      <keep-alive :exclude="['xg-note','xg-create-note','xg-edit-note']">
+      <keep-alive :include="keepAlive">
         <router-view></router-view>
       </keep-alive>
     </section>
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { GET_NOTES } from "./store/types";
+import * as types from "./store/types";
 import XgHeader from "@/components/Header";
 import XgNavbar from "@/components/Navbar";
 
@@ -20,13 +20,14 @@ export default {
   beforeMount() {
     this.title = this.$route.meta.title;
     this.getNotes();
+    this.getTagMap();
   },
   methods: {
     getNotes() {
       // 获取 notes 数据
       this.loading = true;
       this.$store
-        .dispatch(GET_NOTES)
+        .dispatch(types.GET_NOTES)
         .then(() => {})
         .catch(() => {
           this.$toast({
@@ -37,17 +38,27 @@ export default {
           this.loading = false;
           this.$indicator.close();
         });
+    },
+    getTagMap() {
+      this.$store.dispatch(types.GET_TAG_MAP);
     }
   },
   data() {
     return {
       title: "",
-      loading: ""
+      loading: "",
+      keepAlive: []
     };
   },
   watch: {
     $route(to) {
       this.title = to.meta.title;
+      if (to.meta.keepAlive) {
+        if (this.keepAlive.indexOf(to.meta.keepAlive) != -1) {
+          return;
+        }
+        this.keepAlive.push(to.meta.keepAlive);
+      }
     },
     loading(newVal) {
       if (newVal) {

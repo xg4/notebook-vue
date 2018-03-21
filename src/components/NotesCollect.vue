@@ -12,7 +12,7 @@ import XgNoteCard from "@/components/NoteCard";
 import XgEmpty from "@/components/Empty";
 
 export default {
-  name: "Collect",
+  name: "XgCollection",
   computed: {
     ...mapGetters({
       notes: "collectNotes"

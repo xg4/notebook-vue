@@ -15,16 +15,21 @@
       </span>
     </div>
     <xg-number-board :board="board"></xg-number-board>
-    <xg-user-profile-item @click.native="handleExport">
+    <router-link to="/profile/tag">
+      <xg-profile-item>
+        <i class="icon icon-tag" style="color:rgb(74, 165, 240);" slot="icon"></i>
+        标签管理
+      </xg-profile-item>
+    </router-link>
+    <xg-profile-item @click.native="handleExport">
       <i class="icon icon-export" style="color:rgb(74, 165, 240);" slot="icon"></i>
       导出笔记
-    </xg-user-profile-item>
-
-    <xg-user-profile-item @click.native="handleImport">
+    </xg-profile-item>
+    <xg-profile-item @click.native="handleImport">
       <i class="icon icon-import" style="color: rgb(106, 194, 11);" slot="icon"></i>
       导入笔记
       <template v-if="filename" slot="content">文件名：{{filename}}</template>
-    </xg-user-profile-item>
+    </xg-profile-item>
     <input ref="file" type="file" class="import-notes-file" @change="upload">
     <div class="copyright">
       <p>
@@ -45,11 +50,11 @@
 <script>
 import { downloadJSONFile, renderJSONFile } from "../utils";
 import * as types from "../store/types";
-import XgUserProfileItem from "./UserProfileItem";
+import XgProfileItem from "./ProfileItem";
 import XgNumberBoard from "./NumberBoard";
 
 export default {
-  name: "xg-user",
+  name: "XgProfile",
   data() {
     return {
       filename: ""
@@ -118,13 +123,16 @@ export default {
     }
   },
   components: {
-    XgUserProfileItem,
+    XgProfileItem,
     XgNumberBoard
   }
 };
 </script>
 
 <style scoped>
+a {
+  text-decoration: none;
+}
 .xg-user {
   background: rgba(245, 245, 245);
 }

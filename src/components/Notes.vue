@@ -13,7 +13,7 @@
 import XgTab from "@/components/Tab";
 
 export default {
-  name: "Notes",
+  name: "XgNotes",
   components: {
     XgTab
   }

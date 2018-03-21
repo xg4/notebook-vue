@@ -7,8 +7,27 @@ export default {
   async [types.GET_NOTES]({
     commit
   }) {
-    const notes = await storage.get('notes')
+    const notes = await storage.get('notes') || []
     commit(types.GET_NOTES, notes)
+  },
+  async [types.GET_TAG_MAP]({
+    commit
+  }) {
+    const tagMap = await storage.get('tagMap')
+    if (!tagMap) {
+      return;
+    }
+    commit(types.GET_TAG_MAP, tagMap)
+  },
+  async [types.UPDATE_TAG_MAP]({
+    commit
+  }, newTagMap) {
+    try {
+      await storage.set('tagMap', newTagMap)
+    } catch (err) {
+      return Promise.reject('存储出错！')
+    }
+    commit(types.UPDATE_TAG_MAP, newTagMap)
   },
   async [types.FINISH_NOTE]({
     dispatch,
@@ -135,5 +154,5 @@ export default {
   }, notes) {
     commit(types.UPLOAD_NOTES, notes)
     await dispatch(types.SAVE_NOTES, state.notes)
-  }
+  },
 }

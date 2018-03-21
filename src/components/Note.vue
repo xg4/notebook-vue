@@ -1,6 +1,6 @@
 <template>
   <div v-if="!loading" class="note">
-    <template v-if="note" >
+    <template v-if="note">
       <div class="note-title">
         <h2>{{ note.title }}</h2>
         <ul class="note-info">
@@ -11,6 +11,7 @@
           </li>
           <li class="note-tag note-info-item">
             <xg-tag-icon :type="note.tag"></xg-tag-icon>
+            {{tagName}}
           </li>
           <li class="note-collect note-info-item">
             <xg-collect-btn :collect="note.collect" :id="note.id"></xg-collect-btn>
@@ -39,7 +40,7 @@ import XgFinishBtn from "@/components/FinishBtn";
 import Xg404 from "@/components/404";
 
 export default {
-  name: "xg-note",
+  name: "XgNote",
   beforeMount() {
     this.getNote();
   },
@@ -48,6 +49,11 @@ export default {
       note: "",
       loading: ""
     };
+  },
+  computed: {
+    tagName() {
+      return this.$store.state.tagMap[this.note.tag];
+    }
   },
   watch: {
     loading(newVal) {
