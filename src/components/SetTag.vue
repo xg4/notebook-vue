@@ -1,16 +1,16 @@
 <template>
-    <div class="xg-tag">
-        <h2>自定义标签 </h2>
-        <p>点击标签进行修改</p>
-        <div v-for="(tag,index) in tagMap" :key='index' class="xg-tag-item" :class="index">
-            <el-tag :type="index" @click.native="changeTag(index)">
-                <i class="icon icon-tag"></i>
-                {{tag}}
-            </el-tag>
-            标签名：{{tag}}
-        </div>
-        <mt-button class="btn" type="primary" @click="uploadTagMap" size="large">保存</mt-button>
+  <div class="xg-tag">
+    <h2>自定义标签 </h2>
+    <p>点击标签进行修改</p>
+    <div v-for="(tag,index) in tagMap" :key='index' class="xg-tag-item" :class="index">
+      <el-tag :type="index" @click.native="changeTag(index)">
+        <i class="icon icon-tag"></i>
+        {{tag}}
+      </el-tag>
+      标签名：{{tag}}
     </div>
+    <mt-button class="btn" type="primary" @click="uploadTagMap" size="large">保存</mt-button>
+  </div>
 </template>
 
 <script>
@@ -33,11 +33,16 @@ export default {
     async changeTag(tagType) {
       let tagName;
       try {
-        tagName = await this.$messagebox.prompt("请输入姓名");
+        tagName = await this.$messagebox.prompt("请输入标签名");
+        tagName = tagName.value;
       } catch (err) {
         return;
       }
-      this.tagMap[tagType] = tagName.value;
+      if (tagName && tagName.length <= 5) {
+        this.tagMap[tagType] = tagName;
+      } else {
+        this.$messagebox.alert("标签名应在1~5个字符之间");
+      }
     },
     async uploadTagMap() {
       try {
