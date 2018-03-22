@@ -13,17 +13,18 @@
       </el-tag>
       标签名：{{tag}}
     </div>
-    <mt-button class="btn"
+    <xg-button class="btn"
                type="primary"
                @click="uploadTagMap"
                size="large">
       保存
-    </mt-button>
+    </xg-button>
   </div>
 </template>
 
 <script>
 import * as types from '../store/types'
+import XgButton from './button'
 
 export default {
   name: 'XgSetTag',
@@ -64,6 +65,9 @@ export default {
         this.$router.back()
       })
     }
+  },
+  components: {
+    XgButton
   }
 }
 </script>

@@ -29,12 +29,16 @@
       </el-form-item>
       <el-form-item label-width="0"
                     class="form-btn-group">
-        <mt-button size="large"
+        <xg-button size="large"
                    :disabled="loading"
                    type="primary"
-                   @click="submitForm()">提交</mt-button>
-        <mt-button size="large"
-                   @click="restoreForm()">重置</mt-button>
+                   @click="submitForm()">
+          提交
+        </xg-button>
+        <xg-button size="large"
+                   @click="restoreForm()">
+          还原
+        </xg-button>
       </el-form-item>
     </el-form>
   </div>
@@ -43,6 +47,7 @@
 <script>
 import * as types from '../store/types'
 import XgSelectTag from './SelectTag'
+import XgButton from './button'
 
 export default {
   name: 'XgEditeNote',
@@ -139,7 +144,8 @@ export default {
     }
   },
   components: {
-    XgSelectTag
+    XgSelectTag,
+    XgButton
   }
 }
 </script>
