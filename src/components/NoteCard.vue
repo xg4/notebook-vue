@@ -1,11 +1,13 @@
 <template>
   <transition leave-active-class="animated bounceOutLeft">
-    <div class="xg-note-card" @click="handleTo">
+    <div class="xg-note-card"
+         @click="handleTo">
       <div class="xg-note-card-tag">
         <xg-tag-icon :type="note.tag"></xg-tag-icon>
       </div>
       <div class="xg-note-card-finish">
-        <xg-finish-btn :finish="note.finish" :id="note.id"></xg-finish-btn>
+        <xg-finish-btn :finish="note.finish"
+                       :id="note.id"></xg-finish-btn>
       </div>
       <div class="xg-note-card-header">
         <div class="xg-note-card-title">{{ note.title }}</div>
@@ -16,7 +18,8 @@
           {{ note.content }}
         </div>
         <div class="xg-note-card-collect">
-          <xg-collect-btn :collect="note.collect" :id="note.id"></xg-collect-btn>
+          <xg-collect-btn :collect="note.collect"
+                          :id="note.id"></xg-collect-btn>
         </div>
       </div>
     </div>
@@ -24,18 +27,18 @@
 </template>
 
 <script>
-import { formatDate } from "@/utils";
-import XgFinishBtn from "@/components/FinishBtn";
-import XgCollectBtn from "@/components/CollectBtn";
-import XgTagIcon from "@/components/TagIcon";
+import { formatDate } from '@/utils'
+import XgFinishBtn from '@/components/FinishBtn'
+import XgCollectBtn from '@/components/CollectBtn'
+import XgTagIcon from '@/components/TagIcon'
 
 export default {
-  name: "xg-note-card",
-  props: ["note"],
+  name: 'XgNodeCard',
+  props: ['note'],
   methods: {
-    handleTo() {
-      let id = this.note.id || "";
-      this.$router.push({ path: `/note/${id}` });
+    handleTo () {
+      let id = this.note.id || ''
+      this.$router.push({ path: `/note/${id}` })
     }
   },
   components: {
@@ -47,7 +50,7 @@ export default {
     // date filter
     formatDate
   }
-};
+}
 </script>
 
 <style scoped>

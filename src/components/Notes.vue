@@ -10,14 +10,14 @@
 </template>
 
 <script>
-import XgTab from "@/components/Tab";
+import XgTab from '@/components/Tab'
 
 export default {
-  name: "XgNotes",
+  name: 'XgNotes',
   components: {
     XgTab
   }
-};
+}
 </script>
 
 <style>

@@ -1,26 +1,26 @@
 <template>
-    <div class="xg-user-profile-item">
-        <aside class="item-icon">
-            <slot name="icon"></slot>
-        </aside>
-        <div class="item-info">
-            <slot></slot>
-            <span class="item-info-icon">
-                <span class="item-info-content">
-                    <slot name="content"></slot>
-                </span>
-                <span>
-                    <i class="icon icon-arrow-right"></i>
-                </span>
-            </span>
-        </div>
+  <div class="xg-user-profile-item">
+    <aside class="item-icon">
+      <slot name="icon"></slot>
+    </aside>
+    <div class="item-info">
+      <slot></slot>
+      <span class="item-info-icon">
+        <span class="item-info-content">
+          <slot name="content"></slot>
+        </span>
+        <span>
+          <i class="icon icon-arrow-right"></i>
+        </span>
+      </span>
     </div>
+  </div>
 </template>
 
 <script>
 export default {
-  name: "xg-user-profile-item"
-};
+  name: 'XgProfileItem'
+}
 </script>
 
 <style scoped>

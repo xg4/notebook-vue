@@ -2,61 +2,70 @@
   <div class="xg-tag">
     <h2>自定义标签 </h2>
     <p>点击标签进行修改</p>
-    <div v-for="(tag,index) in tagMap" :key='index' class="xg-tag-item" :class="index">
-      <el-tag :type="index" @click.native="changeTag(index)">
+    <div v-for="(tag,index) in tagMap"
+         :key='index'
+         class="xg-tag-item"
+         :class="index">
+      <el-tag :type="index"
+              @click.native="changeTag(index)">
         <i class="icon icon-tag"></i>
         {{tag}}
       </el-tag>
       标签名：{{tag}}
     </div>
-    <mt-button class="btn" type="primary" @click="uploadTagMap" size="large">保存</mt-button>
+    <mt-button class="btn"
+               type="primary"
+               @click="uploadTagMap"
+               size="large">
+      保存
+    </mt-button>
   </div>
 </template>
 
 <script>
-import * as types from "../store/types";
+import * as types from '../store/types'
 
 export default {
-  name: "XgSetTag",
-  beforeMount() {
-    this.getTagMap();
+  name: 'XgSetTag',
+  beforeMount () {
+    this.getTagMap()
   },
-  data() {
+  data () {
     return {
-      tagMap: ""
-    };
+      tagMap: ''
+    }
   },
   methods: {
-    getTagMap() {
-      this.tagMap = { ...this.$store.state.tagMap };
+    getTagMap () {
+      this.tagMap = { ...this.$store.state.tagMap }
     },
-    async changeTag(tagType) {
-      let tagName;
+    async changeTag (tagType) {
+      let tagName
       try {
-        tagName = await this.$messagebox.prompt("请输入标签名");
-        tagName = tagName.value;
+        tagName = await this.$messagebox.prompt('请输入标签名')
+        tagName = tagName.value
       } catch (err) {
-        return;
+        return
       }
       if (tagName && tagName.length <= 5) {
-        this.tagMap[tagType] = tagName;
+        this.tagMap[tagType] = tagName
       } else {
-        this.$messagebox.alert("标签名应在1~5个字符之间");
+        this.$messagebox.alert('标签名应在1~5个字符之间')
       }
     },
-    async uploadTagMap() {
+    async uploadTagMap () {
       try {
-        await this.$store.dispatch(types.UPDATE_TAG_MAP, this.tagMap);
+        await this.$store.dispatch(types.UPDATE_TAG_MAP, this.tagMap)
       } catch (err) {
-        this.$messagebox.alert("保存失败");
-        return;
+        this.$messagebox.alert('保存失败')
+        return
       }
-      this.$messagebox.alert("保存成功").then(action => {
-        this.$router.back();
-      });
+      this.$messagebox.alert('保存成功').then(action => {
+        this.$router.back()
+      })
     }
   }
-};
+}
 </script>
 
 <style scoped>

@@ -1,11 +1,13 @@
 <template>
-  <div v-if="!loading" class="note">
+  <div v-if="!loading"
+       class="note">
     <template v-if="note">
       <div class="note-title">
         <h2>{{ note.title }}</h2>
         <ul class="note-info">
           <li class="note-finish note-info-item">
-            <xg-finish-btn :finish="note.finish" :id="note.id"></xg-finish-btn>
+            <xg-finish-btn :finish="note.finish"
+                           :id="note.id"></xg-finish-btn>
             <span v-if="note.finish">已完成</span>
             <span v-else>未完成</span>
           </li>
@@ -14,7 +16,8 @@
             {{tagName}}
           </li>
           <li class="note-collect note-info-item">
-            <xg-collect-btn :collect="note.collect" :id="note.id"></xg-collect-btn>
+            <xg-collect-btn :collect="note.collect"
+                            :id="note.id"></xg-collect-btn>
             <span v-if="note.collect">已收藏</span>
             <span v-else>未收藏</span>
           </li>
@@ -32,56 +35,56 @@
 </template>
 
 <script>
-import * as types from "../store/types";
-import { formatDate } from "@/utils";
-import XgTagIcon from "@/components/TagIcon";
-import XgCollectBtn from "@/components/CollectBtn";
-import XgFinishBtn from "@/components/FinishBtn";
-import Xg404 from "@/components/404";
+import * as types from '../store/types'
+import { formatDate } from '@/utils'
+import XgTagIcon from '@/components/TagIcon'
+import XgCollectBtn from '@/components/CollectBtn'
+import XgFinishBtn from '@/components/FinishBtn'
+import Xg404 from '@/components/404'
 
 export default {
-  name: "XgNote",
-  beforeMount() {
-    this.getNote();
+  name: 'XgNote',
+  beforeMount () {
+    this.getNote()
   },
-  data() {
+  data () {
     return {
-      note: "",
-      loading: ""
-    };
+      note: '',
+      loading: ''
+    }
   },
   computed: {
-    tagName() {
-      return this.$store.state.tagMap[this.note.tag];
+    tagName () {
+      return this.$store.state.tagMap[this.note.tag]
     }
   },
   watch: {
-    loading(newVal) {
+    loading (newVal) {
       if (newVal) {
         // Indicator 提示
         this.$indicator.open({
-          spinnerType: "fading-circle"
-        });
+          spinnerType: 'fading-circle'
+        })
       } else {
-        this.$indicator.close();
+        this.$indicator.close()
       }
     }
   },
   methods: {
-    getNote() {
-      this.loading = true;
+    getNote () {
+      this.loading = true
       this.$store
         .dispatch(types.GET_NOTE, this.$route.params.id)
         .then(note => {
-          this.note = note;
+          this.note = note
         })
         .catch(() => {
-          this.$toast({ message: "获取数据失败" });
+          this.$toast({ message: '获取数据失败' })
         })
         .finally(() => {
-          this.loading = false;
-          this.$indicator.close();
-        });
+          this.loading = false
+          this.$indicator.close()
+        })
     }
   },
   components: {
@@ -94,7 +97,7 @@ export default {
     // date filter
     formatDate
   }
-};
+}
 </script>
 
 <style scoped>
@@ -103,7 +106,7 @@ export default {
   font-size: 1em;
   line-height: 2em;
   color: #34495e;
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

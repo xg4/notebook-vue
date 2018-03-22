@@ -1,7 +1,9 @@
 <template>
   <footer v-if="showNavbar">
-    <nav class="xg-navbar" :class="{'is-fixed':fixed}">
-      <router-link class="xg-navbar-item" to="/notes">
+    <nav class="xg-navbar"
+         :class="{'is-fixed':fixed}">
+      <router-link class="xg-navbar-item"
+                   to="/notes">
         <div class="xg-navbar-item-icon">
           <i class="icon icon-notebook"></i>
         </div>
@@ -9,7 +11,8 @@
           记事本
         </div>
       </router-link>
-      <router-link class="xg-navbar-item" to="/create/note">
+      <router-link class="xg-navbar-item"
+                   to="/create/note">
         <div class="xg-navbar-item-icon">
           <i class="icon icon-create"></i>
         </div>
@@ -17,7 +20,8 @@
           新建
         </div>
       </router-link>
-      <router-link class="xg-navbar-item" to="/collection">
+      <router-link class="xg-navbar-item"
+                   to="/collection">
         <div class="xg-navbar-item-icon">
           <i class="icon icon-collect"></i>
         </div>
@@ -25,7 +29,8 @@
           收藏
         </div>
       </router-link>
-      <router-link class="xg-navbar-item" to="/profile">
+      <router-link class="xg-navbar-item"
+                   to="/profile">
         <div class="xg-navbar-item-icon">
           <i class="icon icon-user"></i>
         </div>
@@ -34,22 +39,23 @@
         </div>
       </router-link>
     </nav>
-    <div class="xg-navbar is-placeholder" v-if="fixed"></div>
+    <div class="xg-navbar is-placeholder"
+         v-if="fixed"></div>
   </footer>
 </template>
 
 <script>
 export default {
-  name: "xg-navbar",
+  name: 'XgNavbar',
   props: {
     fixed: Boolean
   },
   computed: {
-    showNavbar() {
-      return this.$route.meta.showNavbar;
+    showNavbar () {
+      return this.$route.meta.showNavbar
     }
   }
-};
+}
 </script>
 
 <style scoped>

@@ -4,7 +4,7 @@ import getters from './getters'
 import actions from './actions'
 import mutations from './mutations'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 const debug = process.env.NODE_ENV !== 'production'
 
@@ -18,7 +18,7 @@ const state = {
     warning: '黄色',
     danger: '红色'
   }
-};
+}
 
 export default new Vuex.Store({
   strict: debug,
@@ -26,4 +26,4 @@ export default new Vuex.Store({
   getters,
   actions,
   mutations
-});
+})

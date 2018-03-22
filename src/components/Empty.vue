@@ -13,8 +13,8 @@
 
 <script>
 export default {
-  name: "xg-empty"
-};
+  name: 'XgEmpty'
+}
 </script>
 
 <style scoped>

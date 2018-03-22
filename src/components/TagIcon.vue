@@ -1,12 +1,14 @@
 <template>
-  <i class="icon icon-tag" :class="type"></i>
+  <i class="icon icon-tag"
+     :class="type">
+  </i>
 </template>
 
 <script>
 export default {
-  name: "xg-tag-icon",
-  props: ["type"]
-};
+  name: 'xg-tag-icon',
+  props: ['type']
+}
 </script>
 
 <style scoped>

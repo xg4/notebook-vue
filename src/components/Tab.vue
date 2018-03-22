@@ -1,16 +1,26 @@
 <template>
-  <div class="xg-tab" :class="{ 'is-fixed': fixed }">
-    <router-link to="/notes/all" class="xg-tab-item">全部</router-link>
-    <router-link to="/notes/finish" class="xg-tab-item">已完成</router-link>
-    <router-link to="/notes/unfinish" class="xg-tab-item">未完成</router-link>
+  <div class="xg-tab"
+       :class="{ 'is-fixed': fixed }">
+    <router-link to="/notes/all"
+                 class="xg-tab-item">
+      全部
+    </router-link>
+    <router-link to="/notes/finish"
+                 class="xg-tab-item">
+      已完成
+    </router-link>
+    <router-link to="/notes/unfinish"
+                 class="xg-tab-item">
+      未完成
+    </router-link>
   </div>
 </template>
 
 <script>
 export default {
-  name: "xg-tab",
-  props: ["fixed"]
-};
+  name: 'xg-tab',
+  props: ['fixed']
+}
 </script>
 
 <style scoped>
