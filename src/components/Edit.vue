@@ -15,19 +15,9 @@
       </el-form-item>
       <el-form-item label="标签"
                     prop="tag">
-        <el-select v-model="form.tag"
-                   placeholder="请选择标签类型">
-          <el-option :label="tagName"
-                     :value="tag"
-                     v-for="(tagName,tag) in tagMap"
-                     :key="tag">
-            <span style="float: left">{{tagName}}</span>
-            <span style="float: right;">
-              <i class="icon icon-tag"
-                 :class="tag"></i>
-            </span>
-          </el-option>
-        </el-select>
+        <xg-select-tag v-model="form.tag"
+                       :tagMap="tagMap">
+        </xg-select-tag>
       </el-form-item>
       <el-form-item label="是否收藏"
                     label-width="80px">
@@ -52,6 +42,7 @@
 
 <script>
 import * as types from '../store/types'
+import XgSelectTag from './SelectTag'
 
 export default {
   name: 'XgEditeNote',
@@ -146,6 +137,9 @@ export default {
         }
       })
     }
+  },
+  components: {
+    XgSelectTag
   }
 }
 </script>
