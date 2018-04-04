@@ -3,13 +3,35 @@ const moment = require('moment')
 moment.locale('zh-cn')
 
 /**
+ * @description quick sort
+ * @param {Array} arr
+ */
+export const quickSort = arr => {
+  if (arr.length <= 1) {
+    return arr
+  }
+  let left = []
+  let right = []
+  let pivotIndex = Math.floor(arr.length / 2)
+  let pivot = arr.splice(pivotIndex, 1)[0]
+  for (let i of arr) {
+    if (i < pivot) {
+      left.push(i)
+    } else {
+      right.push(i)
+    }
+  }
+  return [...quickSort(left), pivot, ...quickSort(right)]
+}
+
+/**
  * @description bubble sort
  * @param {Array} 需要排序的数组
  * @param {String} 按时间排序
  * @param {Boolean} ture 为正序，false 为倒序
  * @returns {Array}
  */
-const bubbleSortByTime = (arr, date, type = false) => {
+export const bubbleSortByTime = (arr, date, type = false) => {
   for (let i = 0; i < arr.length; i++) {
     for (let j = i + 1; j < arr.length; j++) {
       if (
@@ -31,7 +53,7 @@ const bubbleSortByTime = (arr, date, type = false) => {
  * @param {Date}
  * @param {Boolean} 是否友好展示
  */
-const formatDate = (date = Date.now(), friendly) => {
+export const formatDate = (date = Date.now(), friendly) => {
   if (!friendly) {
     let now = Date.now()
     let old = new Date(date).getTime()
@@ -49,14 +71,14 @@ const formatDate = (date = Date.now(), friendly) => {
 /**
  * @description 使用uuid根据timestamp生成id
  */
-const getNoteId = () => {
+export const getNoteId = () => {
   return uuidv1()
 }
 
 /**
  * @description 简化localStorage
  */
-const storage = {
+export const storage = {
   get (key) {
     let notes = localStorage.getItem(key)
     return JSON.parse(notes)
@@ -73,7 +95,7 @@ const storage = {
  * @param {Array} newNotes
  * @returns {Array} 合并之后的notes
  */
-const mergeNotes = (oldNotes, newNotes) => {
+export const mergeNotes = (oldNotes, newNotes) => {
   let savedNotes = [...oldNotes]
   let findNote
   for (let i = 0; i < newNotes.length; i++) {
@@ -97,7 +119,7 @@ const mergeNotes = (oldNotes, newNotes) => {
 /**
  * @description HTML5 Blob(二进制大对象) 将notes JSON数据下载到本地
  */
-const downloadJSONFile = () => {
+export const downloadJSONFile = () => {
   if (Blob) {
     let notes = localStorage.getItem('notes')
     let blob = new Blob([notes], {
@@ -124,7 +146,7 @@ const downloadJSONFile = () => {
  * @description 导入notes 将json文件导入localStorage
  * @param {DOM} input file DOM对象
  */
-const renderJSONFile = fileDOM => {
+export const renderJSONFile = fileDOM => {
   return new Promise((resolve, reject) => {
     let file
     file = fileDOM.files[0]
@@ -154,14 +176,4 @@ const renderJSONFile = fileDOM => {
       return reject(err)
     }
   })
-}
-
-export {
-  bubbleSortByTime,
-  formatDate,
-  getNoteId,
-  storage,
-  downloadJSONFile,
-  renderJSONFile,
-  mergeNotes
 }
