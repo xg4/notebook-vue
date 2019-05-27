@@ -2,6 +2,12 @@
 
 > A mobile notebook for vue.js
 
+## Deprecated
+
+This repo has been deprecated, you can also see the new app at [xg4/notes](https://github.com/xg4/notes)
+
+这个仓库已经弃用（不在维护），可以在 [xg4/notes](https://github.com/xg4/notes) 使用新的备忘录应用
+
 ## Demo
 
 [https://xg4.github.io/notebook-vue/](https://xg4.github.io/notebook-vue/)
